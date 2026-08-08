@@ -19,8 +19,10 @@ CONTENT_TYPES = {
     "faq",
     "press",
     "press-asset",
+    "site-asset",
 }
 DEPLOYABLE_STATES = {"placeholder", "approved", "published"}
+FILE_ASSET_TYPES = {"press-asset", "site-asset"}
 
 
 class ContentModelError(RuntimeError):
@@ -46,9 +48,11 @@ def validate_canonical(value: object, artifact_id: str, content_type: str) -> st
     if any(part in {".", ".."} for part in canonical.split("/")):
         fail(f"canonical_url must not contain traversal segments: {artifact_id}")
 
-    if content_type == "press-asset":
+    if content_type in FILE_ASSET_TYPES:
         if re.fullmatch(r"/[a-z0-9._~/-]+", canonical) is None:
-            fail(f"press asset canonical_url must use lowercase safe characters: {artifact_id}")
+            fail(f"asset canonical_url must use lowercase safe characters: {artifact_id}")
+        if canonical.endswith("/"):
+            fail(f"asset canonical_url must identify a file: {artifact_id}")
     elif re.fullmatch(r"/(?:[a-z0-9-]+/)*", canonical) is None:
         fail(f"reader canonical_url must be lowercase, hyphenated, extensionless, and end with '/': {artifact_id}")
     return canonical

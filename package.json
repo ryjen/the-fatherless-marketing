@@ -1,0 +1,11 @@
+{
+  "name": "the-fatherless-marketing-validation",
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0",
+    "sharp": "0.35.3"
+  }
+}

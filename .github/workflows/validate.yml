@@ -17,8 +17,24 @@ jobs:
         with:
           persist-credentials: false
       - name: Test publication boundary
-        run: python3 -m unittest discover -s tests -v
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Install visual validation dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
+      - name: Test responsive media generation
+        run: node tests/test-responsive-media.mjs
       - name: Build
         run: sh scripts/build.sh
       - name: Validate
         run: sh scripts/validate.sh
+      - name: Install Chromium for browser smoke
+        run: npx playwright install --with-deps chromium
+      - name: Browser smoke
+        env:
+          SITE_BASE_URL: http://127.0.0.1:4173/the-fatherless-marketing/
+        run: |
+          mkdir -p /tmp/pages-origin/the-fatherless-marketing
+          cp -R dist/. /tmp/pages-origin/the-fatherless-marketing/
+          python3 -m http.server 4173 --directory /tmp/pages-origin >/tmp/fatherless-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          npx playwright test tests/browser-smoke.spec.js --reporter=line
