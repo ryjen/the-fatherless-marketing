@@ -71,8 +71,31 @@ test('mobile layout survives 200% text sizing', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto(siteUrl(''), { waitUntil: 'networkidle' });
   await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  expect(overflow).toBeLessThanOrEqual(1);
+  const layout = await page.evaluate(() => {
+    const viewportWidth = document.documentElement.clientWidth;
+    const overflow = document.documentElement.scrollWidth - viewportWidth;
+    const offenders = [...document.querySelectorAll('body *')]
+      .map(element => {
+        const rect = element.getBoundingClientRect();
+        const styles = getComputedStyle(element);
+        return {
+          tag: element.tagName.toLowerCase(),
+          className: element.className || '',
+          text: (element.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 60),
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          width: Math.round(rect.width),
+          scrollWidth: element.scrollWidth,
+          minWidth: styles.minWidth,
+          maxWidth: styles.maxWidth,
+          fontSize: styles.fontSize,
+        };
+      })
+      .filter(item => item.right > viewportWidth + 1 || item.left < -1 || item.scrollWidth > item.width + 1)
+      .slice(0, 12);
+    return { overflow, offenders };
+  });
+  expect(layout.overflow, JSON.stringify(layout.offenders, null, 2)).toBeLessThanOrEqual(1);
   await expect(page.locator('h1')).toBeVisible();
 });
 
