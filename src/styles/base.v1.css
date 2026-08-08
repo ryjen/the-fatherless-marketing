@@ -215,14 +215,13 @@ blockquote {
   :root { --page: min(100% - 1.25rem, 74rem); }
   .site-header { align-items: flex-start; flex-direction: column; }
   .primary-nav { width: 100%; }
-  .primary-nav ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .primary-nav ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr)); }
   .primary-nav a { justify-content: center; border: 1px solid var(--border); }
   .editorial-grid > * { grid-column: span 12; }
   .hero { min-height: 34rem; padding-block: var(--space-5); }
 }
 
 @media (max-width: 30rem) {
-  .primary-nav ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero__panel { padding: var(--space-4); }
 }
 
