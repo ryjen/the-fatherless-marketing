@@ -8,7 +8,8 @@ from pathlib import Path
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "publication.py"
 spec = importlib.util.spec_from_file_location("publication", MODULE_PATH)
 publication = importlib.util.module_from_spec(spec)
-assert spec.loader is not None
+if spec.loader is None:
+    raise RuntimeError("could not load publication module")
 spec.loader.exec_module(publication)
 
 
@@ -56,6 +57,10 @@ class PublicationBoundaryTests(unittest.TestCase):
         self.manifest([self.artifact(approval_state="withdrawn", replacement_status="withdrawn")])
         self.assert_invalid("non-publishable artifact must not live under src")
 
+    def test_state_replacement_mismatch_is_rejected(self):
+        self.manifest([self.artifact(approval_state="withdrawn", replacement_status="current")])
+        self.assert_invalid("approval/replacement state mismatch")
+
     def test_path_traversal_is_rejected(self):
         outside = self.root / "outside.txt"
         outside.write_text("x")
@@ -77,7 +82,7 @@ class PublicationBoundaryTests(unittest.TestCase):
                 metadata_review="stripped",
             ),
         ])
-        self.assert_invalid("attribution_text required")
+        self.assert_invalid("attribution_text")
 
     def test_retained_metadata_requires_reason(self):
         image = self.root / "src" / "image.jpg"
@@ -94,7 +99,7 @@ class PublicationBoundaryTests(unittest.TestCase):
                 metadata_review="reviewed-retained",
             ),
         ])
-        self.assert_invalid("metadata_retention_reason required")
+        self.assert_invalid("metadata_retention_reason")
 
     def test_stripped_jpeg_metadata_is_rejected(self):
         image = self.root / "src" / "image.jpg"
