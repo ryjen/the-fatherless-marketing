@@ -68,6 +68,10 @@ Approved synopsis, creator information, release facts, contact routes, and press
 
 Approved downloadable media or document. Requires complete media provenance, attribution, metadata review, checksum, and rights basis.
 
+### `site-asset`
+
+Public presentation infrastructure such as versioned stylesheets or future static runtime assets. Site assets are still manifest-backed and use root-relative file canonical URLs. They must contain no private source coordinates, editorial metadata, hidden narrative material, or unreviewed third-party payloads.
+
 ## Classification rules
 
 ### Spoiler tier
