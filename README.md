@@ -13,14 +13,23 @@ This repository contains only material intentionally approved for public release
 
 ## Development
 
-The initial implementation is intentionally minimal and placeholder-only while public-content governance is established.
+The site is static HTML/CSS with a manifest-authoritative publication boundary. Python performs source/build validation; Node dependencies are development-only tooling for responsive-media generation and Chromium smoke tests.
 
 ```sh
 sh scripts/build.sh
 sh scripts/validate.sh
 ```
 
-Generated output is written to `dist/` and must be reproducible from committed public source files.
+For the complete visual validation suite:
+
+```sh
+npm install --no-package-lock --no-audit --no-fund
+node tests/test-responsive-media.mjs
+npx playwright install chromium
+# serve dist/ and run tests/browser-smoke.spec.js with SITE_BASE_URL set to the served base path
+```
+
+Generated output is written to `dist/` and must be reproducible from committed public source files. See `docs/visual-system.md` for visual, accessibility, media, cache, and performance conventions.
 
 ## Deployment
 
