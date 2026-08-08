@@ -1,14 +1,18 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "artifacts": [
     {
       "id": "site-placeholder-home",
       "path": "src/index.html",
+      "title": "The Fatherless",
+      "summary": "Temporary non-story home page while public reader content is prepared.",
       "content_type": "page",
       "spoiler_tier": "placeholder",
       "approval_state": "placeholder",
       "rights_status": "repository-authored",
       "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/",
       "checksum_sha256": null,
       "replacement_status": "current"
     }
