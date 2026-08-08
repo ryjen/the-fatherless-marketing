@@ -1,0 +1,7 @@
+{
+  "max_html_bytes": 24576,
+  "max_css_bytes": 32768,
+  "max_initial_requests": 12,
+  "max_external_requests": 0,
+  "max_render_blocking_scripts": 0
+}
