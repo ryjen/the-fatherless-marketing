@@ -33,7 +33,8 @@ try {
     const metadata = await sharp(path.join(tmp, file)).metadata();
     assert.ok(metadata.width && metadata.width <= 1200);
     assert.ok(metadata.height && metadata.height <= 800);
-    assert.ok(['avif', 'webp'].includes(metadata.format));
+    if (file.endsWith('.avif')) assert.equal(metadata.format, 'heif');
+    if (file.endsWith('.webp')) assert.equal(metadata.format, 'webp');
   }
   console.log('Responsive media generation passed.');
 } finally {
