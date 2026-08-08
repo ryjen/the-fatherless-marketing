@@ -98,6 +98,14 @@ class ContentModelTests(unittest.TestCase):
         self.manifest([self.artifact(content_type="press-asset", canonical_url="/press/cover-v1.jpg")])
         content_model.validate(self.root)
 
+    def test_site_asset_file_url_allowed(self):
+        self.manifest([self.artifact(content_type="site-asset", path="src/styles/base.v1.css", canonical_url="/styles/base.v1.css")])
+        content_model.validate(self.root)
+
+    def test_asset_directory_url_rejected(self):
+        self.manifest([self.artifact(content_type="site-asset", path="src/styles/base.v1.css", canonical_url="/styles/")])
+        self.assert_invalid("asset canonical_url must identify a file")
+
 
 if __name__ == "__main__":
     unittest.main()
