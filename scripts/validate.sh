@@ -19,13 +19,16 @@ if grep -RniE 'github\.com/ryjen/the-fatherless([^a-zA-Z0-9_-]|$)|BEGIN (RSA |OP
 fi
 
 python3 - <<'PY'
+import hashlib
 import json
+import re
 from pathlib import Path
 
 manifest = json.loads(Path('public-manifest.json').read_text())
 assert manifest.get('schema_version') == 1, 'unsupported manifest schema'
 allowed_tiers = {'placeholder', 'premise', 'early-context', 'approved-excerpt'}
 allowed_states = {'placeholder', 'candidate', 'approved', 'published', 'withdrawn', 'superseded'}
+allowed_replacement = {'current', 'withdrawn', 'superseded'}
 seen = set()
 for artifact in manifest.get('artifacts', []):
     required = {'id','path','content_type','spoiler_tier','approval_state','rights_status','provenance_class','checksum_sha256','replacement_status'}
@@ -35,7 +38,22 @@ for artifact in manifest.get('artifacts', []):
     seen.add(artifact['id'])
     assert artifact['spoiler_tier'] in allowed_tiers, f"publicly forbidden spoiler tier: {artifact['spoiler_tier']}"
     assert artifact['approval_state'] in allowed_states, f"invalid approval state: {artifact['approval_state']}"
-    assert Path(artifact['path']).is_file(), f"manifest path missing: {artifact['path']}"
+    assert artifact['replacement_status'] in allowed_replacement, f"invalid replacement status: {artifact['replacement_status']}"
+
+    path = Path(artifact['path'])
+    assert path.is_file(), f"manifest path missing: {artifact['path']}"
+
+    if artifact['approval_state'] == 'candidate':
+        assert path.parts[0] != 'src', f"candidate artifact must not be build-visible: {artifact['path']}"
+
+    checksum = artifact['checksum_sha256']
+    if artifact['approval_state'] in {'approved', 'published'}:
+        assert isinstance(checksum, str) and re.fullmatch(r'[0-9a-f]{64}', checksum), f"approved artifact requires sha256: {artifact['id']}"
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        assert checksum == actual, f"checksum mismatch for {artifact['id']}"
+    elif checksum is not None:
+        assert isinstance(checksum, str) and re.fullmatch(r'[0-9a-f]{64}', checksum), f"invalid sha256 for {artifact['id']}"
+
     serialized = json.dumps(artifact).lower()
     for forbidden in ('github.com/ryjen/the-fatherless', 'private_issue', 'private_path', 'private_revision'):
         assert forbidden not in serialized, f"private provenance field/reference detected in {artifact['id']}"
