@@ -28,11 +28,12 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  min-width: 20rem;
+  min-width: 0;
   background: var(--bg);
   color: var(--text);
   font: 1rem/1.65 var(--font-serif);
   text-rendering: optimizeLegibility;
+  overflow-wrap: anywhere;
 }
 img, picture, svg { display: block; max-width: 100%; }
 a { color: var(--accent); text-underline-offset: 0.18em; }
@@ -92,6 +93,7 @@ main { width: var(--page); margin-inline: auto; }
   color: var(--text);
   font: 650 0.95rem/1.2 var(--font-sans);
   text-decoration-thickness: 0.08em;
+  overflow-wrap: normal;
 }
 .primary-nav a[aria-current='page'] { color: var(--accent); }
 
