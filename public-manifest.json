@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "id": "site-placeholder-home",
+      "path": "src/index.html",
+      "content_type": "page",
+      "spoiler_tier": "placeholder",
+      "approval_state": "placeholder",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "checksum_sha256": null,
+      "replacement_status": "current"
+    }
+  ]
+}
