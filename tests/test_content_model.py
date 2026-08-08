@@ -86,6 +86,18 @@ class ContentModelTests(unittest.TestCase):
         self.manifest([self.artifact(canonical_url="/?draft=1")])
         self.assert_invalid("canonical_url must not contain query")
 
+    def test_reader_url_extension_rejected(self):
+        self.manifest([self.artifact(canonical_url="/books/page.html")])
+        self.assert_invalid("reader canonical_url must be lowercase")
+
+    def test_reader_url_uppercase_rejected(self):
+        self.manifest([self.artifact(canonical_url="/Books/")])
+        self.assert_invalid("reader canonical_url must be lowercase")
+
+    def test_press_asset_file_url_allowed(self):
+        self.manifest([self.artifact(content_type="press-asset", canonical_url="/press/cover-v1.jpg")])
+        content_model.validate(self.root)
+
 
 if __name__ == "__main__":
     unittest.main()
