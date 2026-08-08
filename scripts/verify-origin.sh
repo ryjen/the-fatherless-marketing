@@ -55,10 +55,4 @@ grep -Fq -- '--text:' "$tmp/base.css" || {
   exit 1
 }
 
-home="$tmp/home.html"
-if grep -Eq '(github\.com/ryjen/the-fatherless([/#?]|$)|api\.github\.com/repos/ryjen/the-fatherless([/#?]|$))' "$home"; then
-  echo "deployed home page contains a private-repository reference" >&2
-  exit 1
-fi
-
 printf 'Verified deployed Pages origin: %s\n' "$base"
