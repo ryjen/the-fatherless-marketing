@@ -84,7 +84,7 @@ test('reduced motion disables smooth scrolling and transition duration', async (
     transition: getComputedStyle(document.querySelector('.button')).transitionDuration,
   }));
   expect(reduced.scroll).toBe('auto');
-  expect(['0s', '0.00001s', '0.01ms']).toContain(reduced.transition);
+  expect(parseFloat(reduced.transition)).toBeLessThanOrEqual(0.00001);
 });
 
 test('primary navigation destinations resolve inside the deployed base path', async ({ page, request }) => {
