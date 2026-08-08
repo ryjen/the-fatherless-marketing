@@ -6,3 +6,4 @@ cd "$root"
 
 python3 scripts/content_model.py
 python3 scripts/publication.py validate
+python3 scripts/performance_budget.py
