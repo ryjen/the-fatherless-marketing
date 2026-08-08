@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Test publication boundary
+        run: python3 -m unittest discover -s tests -v
       - name: Build
         run: sh scripts/build.sh
       - name: Validate
