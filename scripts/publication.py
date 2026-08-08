@@ -17,7 +17,8 @@ TEXT_SUFFIXES = {".html", ".md", ".txt"}
 PUBLIC_TEXT_SUFFIXES = {".html", ".md", ".txt", ".json", ".yml", ".yaml", ".css", ".js", ".xml", ".svg"}
 CREATOR_CLASSES = {"author-created", "commissioned", "generated", "stock", "public-domain", "historical", "contributor-owned"}
 METADATA_REVIEWS = {"stripped", "reviewed-retained"}
-PRIVATE_RE = re.compile(r"(?i)ryjen/the-fatherless(?!-marketing)")
+FORBIDDEN_REPO_HASHES = {"b2039a6916963fafa6c5f93fc6f90cfdbb2aa9fbb3cc7c2792f97a9661a23d6b"}
+REPO_SLUG_RE = re.compile(r"(?i)(?=([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+))")
 SECRET_RES = [
     re.compile(r"BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY"),
     re.compile(r"github_pat_[A-Za-z0-9_]{20,}"),
@@ -37,6 +38,14 @@ def fail(message: str) -> None:
 def require_nonempty_string(value: object, field: str, artifact_id: str) -> None:
     if not isinstance(value, str) or not value.strip():
         fail(f"{field} must be a non-empty string: {artifact_id}")
+
+
+def contains_forbidden_repo(text: str) -> bool:
+    for match in REPO_SLUG_RE.finditer(text):
+        slug = match.group(1).lower().encode()
+        if hashlib.sha256(slug).hexdigest() in FORBIDDEN_REPO_HASHES:
+            return True
+    return False
 
 
 def load_manifest(root: Path) -> dict:
@@ -112,7 +121,7 @@ def iter_public_text_files(root: Path):
 def validate_public_text(root: Path) -> None:
     for path in iter_public_text_files(root):
         text = path.read_text(errors="ignore")
-        if PRIVATE_RE.search(text):
+        if contains_forbidden_repo(text):
             fail(f"private repository identifier detected: {path.relative_to(root)}")
         for pattern in SECRET_RES:
             if pattern.search(text):
@@ -205,7 +214,7 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
                     fail(f"embedded metadata present despite stripped status for {artifact_id}: {', '.join(markers)}")
 
         serialized = json.dumps(artifact).lower()
-        if PRIVATE_RE.search(serialized):
+        if contains_forbidden_repo(serialized):
             fail(f"private repository reference detected in {artifact_id}")
         for forbidden in ("private_issue", "private_path", "private_revision"):
             if forbidden in serialized:
