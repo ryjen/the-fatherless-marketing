@@ -16,7 +16,7 @@ MEDIA_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".svg", ".p
 TEXT_SUFFIXES = {".html", ".md", ".txt"}
 PUBLIC_TEXT_SUFFIXES = {".html", ".md", ".txt", ".json", ".yml", ".yaml", ".css", ".js", ".xml", ".svg"}
 CREATOR_CLASSES = {"author-created", "commissioned", "generated", "stock", "public-domain", "historical", "contributor-owned"}
-METADATA_REVIEWS = {"stripped", "reviewed-retained", "not-applicable"}
+METADATA_REVIEWS = {"stripped", "reviewed-retained"}
 PRIVATE_RE = re.compile(r"(?i)ryjen/the-fatherless(?!-marketing)")
 SECRET_RES = [
     re.compile(r"BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY"),
@@ -32,6 +32,11 @@ class ValidationError(RuntimeError):
 
 def fail(message: str) -> None:
     raise ValidationError(message)
+
+
+def require_nonempty_string(value: object, field: str, artifact_id: str) -> None:
+    if not isinstance(value, str) or not value.strip():
+        fail(f"{field} must be a non-empty string: {artifact_id}")
 
 
 def load_manifest(root: Path) -> dict:
@@ -116,8 +121,7 @@ def validate_public_text(root: Path) -> None:
     if src.exists():
         for path in src.rglob("*"):
             if path.is_file() and path.suffix.lower() in TEXT_SUFFIXES:
-                text = path.read_text(errors="ignore")
-                if DRAFT_RE.search(text):
+                if DRAFT_RE.search(path.read_text(errors="ignore")):
                     fail(f"draft marker detected in public source: {path.relative_to(root)}")
 
 
@@ -137,6 +141,9 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
         if not isinstance(artifact_id, str) or not artifact_id or artifact_id in seen_ids:
             fail(f"invalid or duplicate artifact id: {artifact_id}")
         seen_ids.add(artifact_id)
+        require_nonempty_string(artifact["content_type"], "content_type", artifact_id)
+        require_nonempty_string(artifact["rights_status"], "rights_status", artifact_id)
+        require_nonempty_string(artifact["provenance_class"], "provenance_class", artifact_id)
 
         if artifact["spoiler_tier"] not in ALLOWED_TIERS:
             fail(f"publicly forbidden spoiler tier: {artifact['spoiler_tier']}")
@@ -144,6 +151,12 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
             fail(f"invalid approval state: {artifact['approval_state']}")
         if artifact["replacement_status"] not in ALLOWED_REPLACEMENT:
             fail(f"invalid replacement status: {artifact['replacement_status']}")
+
+        state = artifact["approval_state"]
+        replacement = artifact["replacement_status"]
+        expected_replacement = "withdrawn" if state == "withdrawn" else "superseded" if state == "superseded" else "current"
+        if replacement != expected_replacement:
+            fail(f"approval/replacement state mismatch for {artifact_id}: {state}/{replacement}")
 
         repo_path = normalized_repo_path(artifact["path"])
         raw_path = repo_path.as_posix()
@@ -155,9 +168,7 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
             fail(f"manifest path missing: {raw_path}")
 
         in_src = repo_path.parts[0] == "src"
-        state = artifact["approval_state"]
-        replacement = artifact["replacement_status"]
-        if in_src and (state not in PUBLISHABLE_STATES or replacement != "current"):
+        if in_src and state not in PUBLISHABLE_STATES:
             fail(f"non-publishable artifact must not live under src/: {raw_path}")
         if state == "candidate" and in_src:
             fail(f"candidate artifact must not be build-visible: {raw_path}")
@@ -179,19 +190,16 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
                 fail(f"media provenance fields missing for {artifact_id}: {sorted(media_missing)}")
             if artifact["creator_class"] not in CREATOR_CLASSES:
                 fail(f"invalid creator_class: {artifact_id}")
-            if not isinstance(artifact["rights_basis"], str) or not artifact["rights_basis"].strip():
-                fail(f"rights_basis required: {artifact_id}")
+            require_nonempty_string(artifact["rights_basis"], "rights_basis", artifact_id)
             if not isinstance(artifact["attribution_required"], bool):
                 fail(f"attribution_required must be boolean: {artifact_id}")
-            if artifact["attribution_required"] and (not isinstance(artifact.get("attribution_text"), str) or not artifact["attribution_text"].strip()):
-                fail(f"attribution_text required: {artifact_id}")
+            if artifact["attribution_required"]:
+                require_nonempty_string(artifact.get("attribution_text"), "attribution_text", artifact_id)
             if artifact["metadata_review"] not in METADATA_REVIEWS:
                 fail(f"invalid metadata_review: {artifact_id}")
             if artifact["metadata_review"] == "reviewed-retained":
-                reason = artifact.get("metadata_retention_reason")
-                if not isinstance(reason, str) or not reason.strip():
-                    fail(f"metadata_retention_reason required: {artifact_id}")
-            elif artifact["metadata_review"] == "stripped":
+                require_nonempty_string(artifact.get("metadata_retention_reason"), "metadata_retention_reason", artifact_id)
+            else:
                 markers = media_metadata_markers(disk_path)
                 if markers:
                     fail(f"embedded metadata present despite stripped status for {artifact_id}: {', '.join(markers)}")
@@ -224,11 +232,7 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
 
 def publishable_paths(root: Path) -> list[Path]:
     _, entries = validate_manifest(root)
-    paths = []
-    for raw, artifact in entries.items():
-        if raw.startswith("src/") and artifact["approval_state"] in PUBLISHABLE_STATES and artifact["replacement_status"] == "current":
-            paths.append(Path(raw))
-    return sorted(paths)
+    return sorted(Path(raw) for raw, artifact in entries.items() if raw.startswith("src/") and artifact["approval_state"] in PUBLISHABLE_STATES)
 
 
 def build(root: Path) -> None:
@@ -237,8 +241,7 @@ def build(root: Path) -> None:
     shutil.rmtree(dist, ignore_errors=True)
     dist.mkdir(parents=True, exist_ok=True)
     for source_rel in paths:
-        target_rel = Path(*source_rel.parts[1:])
-        target = dist / target_rel
+        target = dist / Path(*source_rel.parts[1:])
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(root / source_rel, target)
     print(f"Built dist/ from {len(paths)} manifest-backed artifact(s).")
