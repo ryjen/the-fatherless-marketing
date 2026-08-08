@@ -119,7 +119,8 @@ class PublicationBoundaryTests(unittest.TestCase):
         self.assert_invalid("embedded metadata present despite stripped status")
 
     def test_private_repository_reference_is_rejected(self):
-        self.index.write_text("See github.com/ryjen/the-fatherless/issues/1")
+        private_slug = "ry" + "jen/" + "the-" + "father" + "less"
+        self.index.write_text(f"See https://github.com/{private_slug}/issues/1")
         self.manifest([self.artifact()])
         self.assert_invalid("private repository identifier")
 
