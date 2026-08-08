@@ -30,9 +30,11 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Browser smoke
         env:
-          SITE_BASE_URL: http://127.0.0.1:4173
+          SITE_BASE_URL: http://127.0.0.1:4173/the-fatherless-marketing/
         run: |
-          python3 -m http.server 4173 --directory dist >/tmp/fatherless-http.log 2>&1 &
+          mkdir -p /tmp/pages-origin/the-fatherless-marketing
+          cp -R dist/. /tmp/pages-origin/the-fatherless-marketing/
+          python3 -m http.server 4173 --directory /tmp/pages-origin >/tmp/fatherless-http.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           npx playwright test tests/browser-smoke.spec.js --reporter=line
