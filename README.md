@@ -16,11 +16,15 @@ This repository contains only material intentionally approved for public release
 The initial implementation is intentionally minimal and placeholder-only while public-content governance is established.
 
 ```sh
-./scripts/build.sh
-./scripts/validate.sh
+sh scripts/build.sh
+sh scripts/validate.sh
 ```
 
 Generated output is written to `dist/` and must be reproducible from committed public source files.
+
+## Deployment
+
+CI validates every pull request and push to `main`. Production Pages/custom-domain activation is intentionally deferred until the public-content policy and cutover checklist are satisfied. See `docs/deployment.md`.
 
 ## Rights
 
