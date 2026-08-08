@@ -33,7 +33,9 @@ Generated output is written to `dist/` and must be reproducible from committed p
 
 ## Deployment
 
-CI validates every pull request and push to `main`. Production Pages/custom-domain activation is intentionally deferred until the public-content policy and cutover checklist are satisfied. See `docs/deployment.md`.
+CI validates every pull request and push to `main`. Non-PR `main` runs upload the validated `dist/` artifact for GitHub Pages, and the deployment job publishes it when Pages is enabled for the repository. If Pages has not yet been enabled, the job exits safely with a notice instead of requiring a long-lived credential.
+
+Initial Pages activation is a one-time repository setting: **Settings → Pages → Source: GitHub Actions**. After that, rerun **Validate public site** or push a new validated `main` change. The workflow verifies the deployed HTTPS origin after publication. Custom-domain cutover remains gated on successful direct-origin, DNS, TLS, cache, and rollback verification. See `docs/deployment.md`.
 
 ## Rights
 
