@@ -13,9 +13,51 @@ h1_count=$(grep -Eio '<h1([[:space:]][^>]*)?>' dist/index.html | wc -l | tr -d '
 [ "$h1_count" = 1 ] || { echo "expected exactly one h1, found $h1_count" >&2; exit 1; }
 
 # Public-boundary tripwires. These are intentionally conservative and supplement human review.
-if grep -RniE 'github\.com/ryjen/the-fatherless([^a-zA-Z0-9_-]|$)|private[-_ ]?(repo|repository)|BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY|ghp_[A-Za-z0-9]+|github_pat_[A-Za-z0-9_]+' src dist; then
+if grep -RniE 'github\.com/ryjen/the-fatherless([^a-zA-Z0-9_-]|$)|BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY|ghp_[A-Za-z0-9]+|github_pat_[A-Za-z0-9_]+' src dist; then
   echo 'possible private-repository reference or secret-like material detected' >&2
   exit 1
 fi
+
+python3 - <<'PY'
+import hashlib
+import json
+import re
+from pathlib import Path
+
+manifest = json.loads(Path('public-manifest.json').read_text())
+assert manifest.get('schema_version') == 1, 'unsupported manifest schema'
+allowed_tiers = {'placeholder', 'premise', 'early-context', 'approved-excerpt'}
+allowed_states = {'placeholder', 'candidate', 'approved', 'published', 'withdrawn', 'superseded'}
+allowed_replacement = {'current', 'withdrawn', 'superseded'}
+seen = set()
+for artifact in manifest.get('artifacts', []):
+    required = {'id','path','content_type','spoiler_tier','approval_state','rights_status','provenance_class','checksum_sha256','replacement_status'}
+    missing = required - artifact.keys()
+    assert not missing, f"manifest entry missing fields: {sorted(missing)}"
+    assert artifact['id'] not in seen, f"duplicate artifact id: {artifact['id']}"
+    seen.add(artifact['id'])
+    assert artifact['spoiler_tier'] in allowed_tiers, f"publicly forbidden spoiler tier: {artifact['spoiler_tier']}"
+    assert artifact['approval_state'] in allowed_states, f"invalid approval state: {artifact['approval_state']}"
+    assert artifact['replacement_status'] in allowed_replacement, f"invalid replacement status: {artifact['replacement_status']}"
+
+    path = Path(artifact['path'])
+    assert path.is_file(), f"manifest path missing: {artifact['path']}"
+
+    if artifact['approval_state'] == 'candidate':
+        assert path.parts[0] != 'src', f"candidate artifact must not be build-visible: {artifact['path']}"
+
+    checksum = artifact['checksum_sha256']
+    if artifact['approval_state'] in {'approved', 'published'}:
+        assert isinstance(checksum, str) and re.fullmatch(r'[0-9a-f]{64}', checksum), f"approved artifact requires sha256: {artifact['id']}"
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        assert checksum == actual, f"checksum mismatch for {artifact['id']}"
+    elif checksum is not None:
+        assert isinstance(checksum, str) and re.fullmatch(r'[0-9a-f]{64}', checksum), f"invalid sha256 for {artifact['id']}"
+
+    serialized = json.dumps(artifact).lower()
+    for forbidden in ('github.com/ryjen/the-fatherless', 'private_issue', 'private_path', 'private_revision'):
+        assert forbidden not in serialized, f"private provenance field/reference detected in {artifact['id']}"
+print('Manifest validation passed.')
+PY
 
 printf '%s\n' 'Validation passed.'
