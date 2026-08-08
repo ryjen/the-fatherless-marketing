@@ -37,7 +37,7 @@ def nonempty(value: object, field: str, artifact_id: str) -> str:
     return value.strip()
 
 
-def validate_canonical(value: object, artifact_id: str) -> str:
+def validate_canonical(value: object, artifact_id: str, content_type: str) -> str:
     canonical = nonempty(value, "canonical_url", artifact_id)
     if not canonical.startswith("/"):
         fail(f"canonical_url must be root-relative: {artifact_id}")
@@ -45,8 +45,12 @@ def validate_canonical(value: object, artifact_id: str) -> str:
         fail(f"canonical_url must not contain query, fragment, or duplicate separators: {artifact_id}")
     if any(part in {".", ".."} for part in canonical.split("/")):
         fail(f"canonical_url must not contain traversal segments: {artifact_id}")
-    if re.fullmatch(r"/[A-Za-z0-9._~/-]*", canonical) is None:
-        fail(f"canonical_url contains unsupported characters: {artifact_id}")
+
+    if content_type == "press-asset":
+        if re.fullmatch(r"/[a-z0-9._~/-]+", canonical) is None:
+            fail(f"press asset canonical_url must use lowercase safe characters: {artifact_id}")
+    elif re.fullmatch(r"/(?:[a-z0-9-]+/)*", canonical) is None:
+        fail(f"reader canonical_url must be lowercase, hyphenated, extensionless, and end with '/': {artifact_id}")
     return canonical
 
 
@@ -95,7 +99,7 @@ def validate(root: Path) -> None:
 
         canonical = artifact["canonical_url"]
         if deployable:
-            canonical = validate_canonical(canonical, artifact_id)
+            canonical = validate_canonical(canonical, artifact_id, content_type)
             if canonical in seen_canonicals:
                 fail(f"duplicate canonical_url: {canonical}")
             seen_canonicals.add(canonical)
