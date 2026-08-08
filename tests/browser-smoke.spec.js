@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
 
-const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:4173';
-const themeRoutes = ['/', '/books/prequel/', '/books/sequel/'];
+const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:4173/';
+const themeRoutes = ['', 'books/prequel/', 'books/sequel/'];
 const viewports = [
   { name: 'mobile', width: 375, height: 812 },
   { name: 'desktop', width: 1440, height: 1000 },
 ];
+const siteUrl = route => new URL(route, base).href;
 
 function hexToRgb(value) {
   const match = value.trim().match(/^#([0-9a-f]{6})$/i);
@@ -27,9 +28,9 @@ function contrast(a, b) {
 
 for (const viewport of viewports) {
   for (const route of themeRoutes) {
-    test(`${viewport.name} ${route} is readable and overflow-safe`, async ({ page }) => {
+    test(`${viewport.name} ${route || '/'} is readable and overflow-safe`, async ({ page }) => {
       await page.setViewportSize(viewport);
-      const response = await page.goto(`${base}${route}`, { waitUntil: 'networkidle' });
+      const response = await page.goto(siteUrl(route), { waitUntil: 'networkidle' });
       expect(response && response.status()).toBeLessThan(400);
       await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('#main')).toBeVisible();
@@ -68,7 +69,7 @@ for (const viewport of viewports) {
 
 test('mobile layout survives 200% text sizing', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto(`${base}/`, { waitUntil: 'networkidle' });
+  await page.goto(siteUrl(''), { waitUntil: 'networkidle' });
   await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
@@ -77,7 +78,7 @@ test('mobile layout survives 200% text sizing', async ({ page }) => {
 
 test('reduced motion disables smooth scrolling and transition duration', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto(`${base}/`);
+  await page.goto(siteUrl(''));
   const reduced = await page.evaluate(() => ({
     scroll: getComputedStyle(document.documentElement).scrollBehavior,
     transition: getComputedStyle(document.querySelector('.button')).transitionDuration,
@@ -86,11 +87,12 @@ test('reduced motion disables smooth scrolling and transition duration', async (
   expect(['0s', '0.00001s', '0.01ms']).toContain(reduced.transition);
 });
 
-test('primary navigation destinations resolve', async ({ page, request }) => {
-  await page.goto(`${base}/`);
-  const hrefs = await page.locator('.primary-nav a').evaluateAll(links => links.map(link => link.getAttribute('href')));
+test('primary navigation destinations resolve inside the deployed base path', async ({ page, request }) => {
+  await page.goto(siteUrl(''));
+  const hrefs = await page.locator('.primary-nav a').evaluateAll(links => links.map(link => link.href));
   for (const href of hrefs) {
-    const response = await request.get(`${base}${href}`);
+    expect(href.startsWith(base)).toBeTruthy();
+    const response = await request.get(href);
     expect(response.status(), `${href} should resolve`).toBeLessThan(400);
   }
 });
