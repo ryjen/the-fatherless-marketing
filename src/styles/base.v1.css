@@ -241,7 +241,8 @@ blockquote {
   .primary-nav { width: 100%; }
   .primary-nav ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr)); }
   .primary-nav a { width: 100%; justify-content: center; border: 1px solid var(--border); }
-  .editorial-grid > * { grid-column: span 12; }
+  .editorial-grid { grid-template-columns: minmax(0, 1fr); }
+  .editorial-grid > * { grid-column: auto; }
   .hero { min-height: 34rem; padding-block: var(--space-5); }
 }
 
