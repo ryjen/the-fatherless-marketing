@@ -1,0 +1,84 @@
+name: Finalize launch surfaces
+
+on:
+  push:
+    branches:
+      - feature/press-news-discoverability
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Install validation dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
+
+      - name: Finalize metadata and manifest
+        run: python3 scripts/finalize-launch-surfaces.py
+
+      - name: Validate XML discovery files
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          ET.parse('src/feed.xml')
+          ET.parse('src/sitemap.xml')
+          print('Feed and sitemap XML parsed successfully.')
+          PY
+
+      - name: Validate publication boundary
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Test responsive media generation
+        run: node tests/test-responsive-media.mjs
+
+      - name: Build and validate
+        run: |
+          sh scripts/build.sh
+          sh scripts/validate.sh
+
+      - name: Verify discovery metadata in built output
+        run: |
+          grep -q 'rel="canonical"' dist/index.html
+          grep -q 'application/atom+xml' dist/index.html
+          grep -q 'og:image' dist/index.html
+          grep -q 'application/ld+json' dist/index.html
+          grep -q 'noindex,follow' dist/world/index.html
+          test -f dist/press/index.html
+          test -f dist/news/2026-08-08-public-trilogy-site/index.html
+          test -f dist/feed.xml
+          test -f dist/sitemap.xml
+          test -f dist/robots.txt
+          ! grep -q '/world/' dist/sitemap.xml
+          ! grep -q '/characters/' dist/sitemap.xml
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser smoke
+        env:
+          SITE_BASE_URL: http://127.0.0.1:4173/the-fatherless-marketing/
+        run: |
+          mkdir -p /tmp/pages-origin/the-fatherless-marketing
+          cp -R dist/. /tmp/pages-origin/the-fatherless-marketing/
+          python3 -m http.server 4173 --directory /tmp/pages-origin >/tmp/fatherless-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          npx playwright test tests/browser-smoke.spec.js --reporter=line
+
+      - name: Commit final launch surface tree
+        run: |
+          rm -f scripts/finalize-launch-surfaces.py .github/workflows/finalize-launch-surfaces.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git diff --cached --check
+          git commit -m "Add press, news, feeds, and discoverability surfaces"
+          git push origin HEAD:feature/press-news-discoverability
