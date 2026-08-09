@@ -6,14 +6,16 @@ The public site is built from `src/` into generated `dist/` output. Pull request
 
 The deployment job has no private-repository checkout, deploy key, Personal Access Token, or cross-repository dependency. It uses the repository-scoped workflow token only for GitHub Pages publication.
 
+`docs/` contains repository documentation and **is not a Pages publishing source**. Do not configure Pages as `Deploy from a branch` using `main:/docs`; that bypasses the validated `dist/` artifact and can expose documentation instead of the intended site.
+
 ## One-time GitHub Pages activation
 
-GitHub Pages must exist before the normal workflow token can deploy to it. The workflow deliberately detects a disabled Pages site and exits successfully with an activation notice rather than weakening permissions or introducing a long-lived credential.
+GitHub Pages must be configured with **GitHub Actions** as its source before the normal workflow can deploy. The deploy job checks the Pages API and fails closed if Pages is disabled or configured for legacy branch publishing.
 
 To activate the public origin once:
 
 1. Open repository **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions** — not `Deploy from a branch` / `main:/docs`.
 3. Run **Actions → Validate public site → Run workflow** (or push a new validated change to `main`).
 4. Confirm that both the validation and deployment jobs succeed.
 5. Confirm that the `Verify deployed Pages origin` step succeeds.
@@ -22,7 +24,7 @@ Before a custom domain is attached, the expected project origin is:
 
 `https://ryjen.github.io/the-fatherless-marketing/`
 
-Do not change DNS merely because the workflow exists. The direct Pages origin must be live and verified first.
+Do not change DNS merely because Pages reports a successful legacy build. The direct Pages origin must be produced from the validated Actions artifact and pass live verification first.
 
 ## Direct-origin verification
 
@@ -46,6 +48,7 @@ Record the exact deployed `main` revision and successful workflow run before pro
 
 - public-content governance and anti-leak controls are in place;
 - the intended public artifact passes build and validation from a fresh checkout;
+- GitHub Pages reports `build_type: workflow`, not `legacy`;
 - the direct Pages origin has passed live verification;
 - creative assets have explicit public rights/provenance records;
 - no private repository, token, deploy key, or cross-repository dependency is required;
