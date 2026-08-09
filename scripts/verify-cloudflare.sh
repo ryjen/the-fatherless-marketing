@@ -50,7 +50,7 @@ grep -Eq '^HTTP/[0-9.]+ (301|302|307|308)' "$tmp/http.headers" || {
   exit 1
 }
 
-location="$(awk 'BEGIN { IGNORECASE=1 } /^location:/ { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$tmp/http.headers")"
+location="$(awk 'tolower($0) ~ /^location:/ { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$tmp/http.headers")"
 case "$location" in
   "https://${host}"|"https://${host}/"|"https://${host}/"*) ;;
   *)
@@ -74,7 +74,7 @@ print_header() {
   label="$1"
   name="$2"
   file="$3"
-  value="$(awk -v target="$name" 'BEGIN { IGNORECASE=1 } index(tolower($0), tolower(target) ":") == 1 { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$file")"
+  value="$(awk -v target="$name" 'index(tolower($0), tolower(target) ":") == 1 { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$file")"
   printf '%s: %s\n' "$label" "${value:-<not present>}"
 }
 
