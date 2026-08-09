@@ -82,24 +82,9 @@ jobs:
 
           case "$status" in
             200)
-              build_type="$(python3 - <<'PY'
-import json
-from pathlib import Path
-state = json.loads(Path('/tmp/pages-state.json').read_text())
-print(state.get('build_type', ''))
-PY
-)"
+              build_type="$(python3 -c 'import json; print(json.load(open("/tmp/pages-state.json")).get("build_type", ""))')"
               if [ "$build_type" != "workflow" ]; then
-                source="$(python3 - <<'PY'
-import json
-from pathlib import Path
-state = json.loads(Path('/tmp/pages-state.json').read_text())
-source = state.get('source') or {}
-branch = source.get('branch', '?')
-path = source.get('path', '?')
-print(f'{branch}:{path}')
-PY
-)"
+                source="$(python3 -c 'import json; s=json.load(open("/tmp/pages-state.json")).get("source") or {}; print("{}:{}".format(s.get("branch", "?"), s.get("path", "?")))')"
                 echo "::error::GitHub Pages is using legacy branch publishing (${source}). In Settings > Pages > Build and deployment, set Source to GitHub Actions. The validated dist artifact must be the only deployment source."
                 exit 1
               fi
