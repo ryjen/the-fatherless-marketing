@@ -1,0 +1,46 @@
+name: Materialize cinematic raster heroes v2
+
+on:
+  push:
+    branches:
+      - design/cinematic-raster-heroes-v5
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - name: Install validation dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
+
+      - name: Materialize reviewed raster heroes
+        run: python3 scripts/materialize-raster-v2.py
+
+      - name: Validate publication boundary
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Test responsive media
+        run: node tests/test-responsive-media.mjs
+
+      - name: Build and validate
+        run: |
+          sh scripts/build.sh
+          sh scripts/validate.sh
+
+      - name: Commit final corrective tree
+        run: |
+          rm -f scripts/materialize-raster-v2.py .github/workflows/materialize-raster-v2.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git diff --cached --check
+          git commit -m "Ship cinematic raster heroes"
+          git push origin HEAD:design/cinematic-raster-heroes-v5
