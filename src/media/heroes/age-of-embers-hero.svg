@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+
+<defs>
+  <filter id="softglow" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur stdDeviation="22"/>
+  </filter>
+  <filter id="noise" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" seed="17"/>
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer><feFuncA type="table" tableValues="0 0.06"/></feComponentTransfer>
+  </filter>
+  <radialGradient id="vignette">
+    <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="68%" stop-color="#000" stop-opacity="0.05"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.52"/>
+  </radialGradient>
+  <g id="person" fill="currentColor">
+    <circle cx="0" cy="-55" r="9"/>
+    <path d="M-11 -43 L11 -43 L7 -10 L-7 -10 Z"/>
+    <path d="M-7 -32 L-19 -12 L-14 -9 L-3 -25 Z"/>
+    <path d="M7 -32 L18 -14 L14 -10 L3 -25 Z"/>
+    <path d="M-5 -10 L-9 0 L-3 0 L0 -10 Z"/>
+    <path d="M5 -10 L9 0 L3 0 L0 -10 Z"/>
+  </g>
+</defs>
+
+<linearGradient id="skyP" x2="0" y2="1"><stop stop-color="#071223"/><stop offset="1" stop-color="#122331"/></linearGradient>
+<linearGradient id="iceP" x2="0" y2="1"><stop stop-color="#b8c6ca"/><stop offset="1" stop-color="#6c7b82"/></linearGradient>
+<radialGradient id="sunP"><stop stop-color="#ead8b8" stop-opacity=".9"/><stop offset=".2" stop-color="#d4b795" stop-opacity=".24"/><stop offset="1" stop-color="#d4b795" stop-opacity="0"/></radialGradient>
+
+
+<rect width="2400" height="1350" fill="url(#skyP)"/>
+<circle cx="1800" cy="520" r="170" fill="url(#sunP)" filter="url(#softglow)"/>
+<path d="M-100 290 C260 150 530 350 810 210 S1410 350 1710 220 S2150 180 2510 285" fill="none" stroke="#b83d50" stroke-opacity=".34" stroke-width="90" filter="url(#softglow)"/>
+<path d="M-40 670 L260 450 470 615 720 370 995 650 1220 420 1510 660 1810 390 2100 625 2420 455 2460 930 -40 930 Z" fill="#132635"/>
+<path d="M-40 755 L300 560 540 735 830 520 1120 760 1380 575 1640 755 1910 535 2210 750 2460 635 2460 985 -40 985 Z" fill="#344a56"/>
+<path d="M-30 790 L560 690 995 785 1510 715 2440 760 2440 1360 -30 1360 Z" fill="url(#iceP)"/>
+<path d="M-30 905 L520 805 1040 900 1560 820 2440 855 2440 1360 -30 1360 Z" fill="#d6dfe0" fill-opacity=".45"/>
+<path d="M1000 845 C1250 790 1500 790 1770 835 C2050 880 2250 960 2440 1060 L2440 1360 1400 1360 C1365 1235 1335 1160 1535 1025 C1400 1000 1240 930 1000 845 Z" fill="#06131f"/>
+<g transform="translate(380 835)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(425 840)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(470 845)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(515 835)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(560 840)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(605 845)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(650 835)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(695 840)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(740 845)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(785 835)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(830 840)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(875 845)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(920 835)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(965 840)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(1010 845)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(1055 835)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(1100 840)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<g transform="translate(1145 845)" fill="#252a2c"><ellipse rx="8" ry="5"/><path d="M-4 3l-4 10M4 3l5 10" stroke="#252a2c" stroke-width="2"/></g>
+<use href="#person" transform="translate(840 970) scale(1.15)" color="#121a20"/>
+<use href="#person" transform="translate(903 973) scale(1.075)" color="#121a20"/>
+<use href="#person" transform="translate(966 976) scale(0.9999999999999999)" color="#121a20"/>
+<use href="#person" transform="translate(1029 979) scale(0.9249999999999999)" color="#121a20"/>
+<use href="#person" transform="translate(1092 982) scale(0.8499999999999999)" color="#121a20"/>
+<use href="#person" transform="translate(1155 985) scale(0.7749999999999999)" color="#121a20"/>
+<g filter="url(#softglow)"><circle cx="840" cy="905" r="34" fill="#ff8c3f" fill-opacity=".18"/><circle cx="840" cy="905" r="7" fill="#ff9a4c"/></g>
+
+<rect width="2400" height="1350" fill="url(#vignette)"/>
+<rect width="2400" height="1350" filter="url(#noise)" opacity=".35"/>
+</svg>
