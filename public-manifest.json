@@ -11,7 +11,7 @@
       "approval_state": "approved",
       "rights_status": "repository-authored",
       "provenance_class": "public-native",
-      "publication_date": "2026-08-08",
+      "publication_date": null,
       "canonical_url": "/",
       "checksum_sha256": "b8846ea7ac57c14145dc16d8d24b36fccefd7def905fa335225489d29fb37dab",
       "replacement_status": "current"
