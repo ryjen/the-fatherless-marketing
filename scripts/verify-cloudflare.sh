@@ -22,10 +22,19 @@ trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 curl_common='--fail --silent --show-error --connect-timeout 10 --max-time 30'
 
 # Verify that the custom domain is actually passing through Cloudflare and
-# still serves the current site marker over HTTPS.
+# still serves the current site marker over HTTPS. Redirects are followed,
+# but the final URL must remain on the configured custom host.
 # shellcheck disable=SC2086
-curl $curl_common --location --dump-header "$tmp/https.headers" \
-  --output "$tmp/home.html" "$base"
+home_effective_url="$(curl $curl_common --location --dump-header "$tmp/https.headers" \
+  --output "$tmp/home.html" --write-out '%{url_effective}' "$base")"
+
+case "$home_effective_url" in
+  "https://${host}"|"https://${host}/"|"https://${host}/"*) ;;
+  *)
+    echo "Cloudflare HTTPS response escaped the canonical host: $home_effective_url" >&2
+    exit 1
+    ;;
+esac
 
 grep -Fqi 'The Fatherless' "$tmp/home.html" || {
   echo "Cloudflare HTTPS response is missing the public-site identity marker: $base" >&2
@@ -62,8 +71,16 @@ esac
 # Fetch the versioned stylesheet through the edge so stale-cache regressions
 # fail on content, while cache disposition is reported for diagnosis.
 # shellcheck disable=SC2086
-curl $curl_common --location --dump-header "$tmp/css.headers" \
-  --output "$tmp/base.css" "${base}styles/base.v1.css"
+css_effective_url="$(curl $curl_common --location --dump-header "$tmp/css.headers" \
+  --output "$tmp/base.css" --write-out '%{url_effective}' "${base}styles/base.v1.css")"
+
+case "$css_effective_url" in
+  "https://${host}/styles/base.v1.css") ;;
+  *)
+    echo "Cloudflare stylesheet response escaped the canonical host: $css_effective_url" >&2
+    exit 1
+    ;;
+esac
 
 grep -Fq -- '--text:' "$tmp/base.css" || {
   echo "Cloudflare-served stylesheet is stale or missing expected visual tokens" >&2
@@ -79,6 +96,7 @@ print_header() {
 }
 
 printf 'Verified Cloudflare edge: %s\n' "$base"
+printf 'Effective HTTPS URL: %s\n' "$home_effective_url"
 print_header 'HTTPS server' 'server' "$tmp/https.headers"
 print_header 'Home CF-Cache-Status' 'cf-cache-status' "$tmp/https.headers"
 print_header 'CSS CF-Cache-Status' 'cf-cache-status' "$tmp/css.headers"
