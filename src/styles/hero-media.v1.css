@@ -63,7 +63,15 @@ body[data-theme='sequel'] .hero--media::after {
 }
 
 @media (max-width: 48rem) {
-  .hero--media .hero__media img {
+  body[data-theme='prequel'] .hero--media .hero__media img {
+    object-position: 40% center;
+  }
+
+  body[data-theme='original'] .hero--media .hero__media img {
+    object-position: 20% center;
+  }
+
+  body[data-theme='sequel'] .hero--media .hero__media img {
     object-position: 58% center;
   }
 
