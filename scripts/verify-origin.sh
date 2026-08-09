@@ -18,12 +18,21 @@ base="${1%/}/"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 
+browser_ua='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+
+browser_curl() {
+  curl --user-agent "$browser_ua" \
+    --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' \
+    --header 'Accept-Language: en-US,en;q=0.9' \
+    "$@"
+}
+
 fetch() {
   url="$1"
   output="$2"
   attempt=1
   while [ "$attempt" -le 12 ]; do
-    if curl --fail --silent --show-error --location \
+    if browser_curl --fail --silent --show-error --location \
       --connect-timeout 10 --max-time 30 \
       --output "$output" "$url"; then
       return 0
