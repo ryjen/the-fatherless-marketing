@@ -1,28 +1,27 @@
 # Hero image provenance
 
-The production hero illustrations are public-native vector artwork created specifically for the marketing site. They do not incorporate stock photography, private authoring files, manuscript imagery, logos, or third-party source assets.
+The production hero artwork is project-generated raster imagery created specifically for the marketing site. It does not incorporate stock photography, private authoring files, manuscript imagery, logos, or third-party source assets.
 
 | Asset | Creator class | Rights basis | Metadata | Public use |
 | --- | --- | --- | --- | --- |
-| `trilogy-overview-hero.svg` | generated | Project-generated original artwork approved for this public release | stripped; no SVG metadata element | homepage trilogy overview |
-| `age-of-embers-hero.svg` | generated | Project-generated original artwork approved for this public release | stripped; no SVG metadata element | prequel hero |
-| `fatherless-original-hero.svg` | generated | Project-generated original artwork approved for this public release | stripped; no SVG metadata element | original hero |
-| `neurion-hero.svg` | generated | Project-generated original artwork approved for this public release | stripped; no SVG metadata element | sequel hero |
+| `age-of-embers-hero.webp` | generated | Project-generated original artwork approved for this public release | stripped | prequel hero and trilogy card |
+| `fatherless-original-hero.webp` | generated | Project-generated original artwork approved for this public release | stripped | homepage landing hero, original hero, and trilogy card |
+| `neurion-hero.webp` | generated | Project-generated original artwork approved for this public release | stripped | sequel hero and trilogy card |
 
 ## Production decision
 
-These assets are vector-native rather than raster masters. SVG is the production format because the artwork is geometric/environmental illustration, remains sharp at responsive sizes, avoids unnecessary raster payloads, and preserves intrinsic `2400 × 1350` dimensions through the `viewBox`.
+The approved public assets are compact 1200 x 675 WebP files. They preserve the cinematic environmental compositions while keeping the three production files small enough that an additional derivative matrix is not required for this release.
 
-The AVIF/WebP derivative requirement in the visual-system guidance applies when an approved **raster** master is used. A future photographic or raster replacement must go through that pipeline. These SVGs remain subject to the same spoiler, rights, metadata, accessibility, crop, and public-manifest review.
+The source-generation prompts and canon-sensitive art reasoning remain outside the deployable public artifact set. Only reviewed public image bytes, public-safe alt text, and public provenance records are published here.
 
 ## Review
 
-The four illustrations were reviewed against the public image-direction brief:
+The three production images were reviewed against the public image-direction brief:
 
-- no devotional or Christianity-coded composition;
+- no devotional or Christianity-coded central figure;
 - no sepia/parchment/brown historical treatment;
-- no sacred central figure, halo, divine beam, or mother-and-child iconography;
+- no sacred halo or saviour portrait treatment;
 - no generic caveman portrait or ritual-fire poster;
-- no glowing robot saviour, Matrix code, or neon-cyberpunk shorthand;
+- no glowing robot saviour, Matrix code, or single central AI deity;
 - no baked-in text, logos, private identifiers, or hidden story mechanics;
 - descriptive `alt` text is supplied by page markup rather than embedded in the artwork.
