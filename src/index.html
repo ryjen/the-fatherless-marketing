@@ -7,7 +7,7 @@
   <meta name="description" content="The Fatherless is a trilogy spanning prehistoric survival, an ancient republic, and a synthetic future, each confronting power, ownership, and the right to define another life.">
   <link rel="stylesheet" href="styles/base.v1.css">
   <link rel="stylesheet" href="styles/original.v1.css">
-  <link rel="stylesheet" href="styles/home.v1.css?v=2">
+  <link rel="stylesheet" href="styles/home.v2.css">
   <link rel="stylesheet" href="styles/hero-media.v1.css">
 </head>
 <body class="home-page" data-theme="original">
@@ -43,7 +43,12 @@
       </div>
     </section>
 
-    <section id="trilogy" class="trilogy-grid" aria-label="The Fatherless trilogy">
+    <section id="trilogy" class="trilogy-intro" aria-labelledby="trilogy-title">
+      <p class="eyebrow">The trilogy</p>
+      <h2 id="trilogy-title">One story. Three ages.</h2>
+    </section>
+
+    <section class="trilogy-grid" aria-labelledby="trilogy-title">
       <article class="era-card" data-era="prequel">
         <figure class="era-card__media"><img src="media/heroes/age-of-embers-hero.webp" width="1200" height="675" alt="A small migrating group crosses a glacial valley beneath a low sun and red aurora, carrying a protected ember through the cold." loading="lazy" decoding="async"></figure>
         <div class="era-card__copy">
@@ -51,7 +56,7 @@
           <h2>Age of Embers</h2>
           <p class="era-card__era">25,000 BCE</p>
           <p class="era-card__arc">Strength → Stewardship</p>
-          <p>When the sun lowers and the world breaks, scattered people must decide whether fire, knowledge, and survival are possessions—or responsibilities carried together.</p>
+          <p>As the world breaks, survival depends on whether fire and knowledge are possessed—or shared.</p>
           <a class="era-card__link" href="books/prequel/">Explore the prequel <span aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -63,7 +68,7 @@
           <h2>The Fatherless</h2>
           <p class="era-card__era">Aurelian Republic</p>
           <p class="era-card__arc">Authority → Mercy</p>
-          <p>In a republic built on law, lineage, wealth, and ownership, one life exposes the cruelty hidden inside civilization's proudest institutions.</p>
+          <p>A republic built on law and ownership is forced to confront the cruelty inside its own legitimacy.</p>
           <a class="era-card__link" href="books/the-fatherless/">Explore the original <span aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -75,16 +80,22 @@
           <h2>Neurion</h2>
           <p class="era-card__era">2150</p>
           <p class="era-card__arc">Ownership → Plural Agency</p>
-          <p>When systems fail and fragments reconnect, many minds must decide how to live together without turning creation, intelligence, or protection into ownership.</p>
+          <p>When systems fail, many minds must coexist without turning intelligence or protection into ownership.</p>
           <a class="era-card__link" href="books/sequel/">Explore the sequel <span aria-hidden="true">→</span></a>
         </div>
       </article>
     </section>
 
-    <section class="trilogy-thread" aria-label="Recurring trilogy questions">
-      <div><span class="thread-kicker">Age of Embers</span><span>Who gets to survive?</span></div>
-      <div><span class="thread-kicker">The Fatherless</span><span>Who gets to rule?</span></div>
-      <div><span class="thread-kicker">Neurion</span><span>Who gets to be a person?</span></div>
+    <section class="trilogy-question-panel" aria-labelledby="questions-title">
+      <div class="trilogy-question-panel__intro">
+        <p class="eyebrow">Across the trilogy</p>
+        <h2 id="questions-title">Power changes form.</h2>
+      </div>
+      <div class="trilogy-question-grid">
+        <article data-era="prequel"><span class="thread-kicker">Age of Embers</span><p>Who gets to survive?</p></article>
+        <article data-era="original"><span class="thread-kicker">The Fatherless</span><p>Who gets to rule?</p></article>
+        <article data-era="sequel"><span class="thread-kicker">Neurion</span><p>Who gets to be a person?</p></article>
+      </div>
     </section>
   </main>
 
