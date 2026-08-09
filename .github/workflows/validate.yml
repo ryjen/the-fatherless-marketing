@@ -26,7 +26,10 @@ jobs:
       - name: Build
         run: sh scripts/build.sh
       - name: Validate
-        run: sh scripts/validate.sh
+        run: |
+          sh scripts/validate.sh
+          sh -n scripts/verify-origin.sh
+          sh -n scripts/verify-cloudflare.sh
       - name: Install Chromium for browser smoke
         run: npx playwright install --with-deps chromium
       - name: Browser smoke
@@ -66,6 +69,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Require GitHub Actions Pages source
+        id: pages-state
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPOSITORY: ${{ github.repository }}
@@ -88,6 +92,8 @@ jobs:
                 echo "::error::GitHub Pages is using legacy branch publishing (${source}). In Settings > Pages > Build and deployment, set Source to GitHub Actions. The validated dist artifact must be the only deployment source."
                 exit 1
               fi
+              custom_domain="$(python3 -c 'import json; print(json.load(open("/tmp/pages-state.json")).get("cname") or "")')"
+              echo "custom_domain=${custom_domain}" >> "$GITHUB_OUTPUT"
               ;;
             404)
               echo '::error::GitHub Pages is disabled. In Settings > Pages > Build and deployment, set Source to GitHub Actions.'
@@ -104,7 +110,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
-      - name: Verify deployed Pages origin
+      - name: Resolve verification URL
+        id: verification
         env:
-          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+          CUSTOM_DOMAIN: ${{ steps.pages-state.outputs.custom_domain }}
+          DEPLOYMENT_URL: ${{ steps.deployment.outputs.page_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            site_url="https://${CUSTOM_DOMAIN}/"
+          else
+            site_url="$DEPLOYMENT_URL"
+          fi
+          echo "site_url=${site_url}" >> "$GITHUB_OUTPUT"
+          echo "Verifying deployed site at ${site_url}"
+      - name: Verify deployed site
+        env:
+          SITE_URL: ${{ steps.verification.outputs.site_url }}
         run: sh scripts/verify-origin.sh "$SITE_URL"
+      - name: Verify Cloudflare edge
+        if: steps.pages-state.outputs.custom_domain != ''
+        env:
+          SITE_URL: ${{ steps.verification.outputs.site_url }}
+        run: sh scripts/verify-cloudflare.sh "$SITE_URL"
