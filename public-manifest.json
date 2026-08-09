@@ -13,7 +13,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/",
-      "checksum_sha256": "450fe7bee451817c59a3340ea3212e6101e98d4053966ef1a90eb6994b3db08e",
+      "checksum_sha256": "078924a0bbe4df7ebd262a7741af4f25307e6ec2c304aa8b0f8508df25c93c38",
       "replacement_status": "current"
     },
     {
@@ -28,7 +28,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/",
-      "checksum_sha256": "151c988a6b621118d14d8128b1484e85862e676fe7244541d07429ccfe41ca3b",
+      "checksum_sha256": "550ddff6082fc5ff8b5d622f89b81c55757fa910cd2c5db24391f22306053176",
       "replacement_status": "current"
     },
     {
@@ -43,7 +43,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/the-fatherless/",
-      "checksum_sha256": "17ab789bea6f10bcb883fe1c6ba1e209e30f729918bd00977c6ed003f7019f9c",
+      "checksum_sha256": "5ae3e988df5d4dba6ea401b474e65b67dcce18a78b0e17419b24183f987fdab4",
       "replacement_status": "current"
     },
     {
@@ -58,7 +58,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/prequel/",
-      "checksum_sha256": "e68ef93600a9dd4a4548d6ebe347cbfc85613e3f9c0d09d4e500b64e55e2b132",
+      "checksum_sha256": "b6f98e6c03b26281763fe4f8550a20ceff7a2ded61576fda94e2c9c20a45af14",
       "replacement_status": "current"
     },
     {
@@ -73,7 +73,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/sequel/",
-      "checksum_sha256": "f76fe9a355e8df5c74712377b262bf0fabe266b56d8df953122b1e20b49334f5",
+      "checksum_sha256": "903c9c882f5a26a0b681d2595ea13c3b4bfce6ef74a2f15a0541e8d19652c63e",
       "replacement_status": "current"
     },
     {
@@ -110,30 +110,30 @@
       "id": "site-placeholder-news",
       "path": "src/news/index.html",
       "title": "News",
-      "summary": "Public news index placeholder.",
+      "summary": "Dated public development, release, excerpt, appearance, and media updates for the trilogy.",
       "content_type": "page",
-      "spoiler_tier": "placeholder",
-      "approval_state": "placeholder",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
       "rights_status": "repository-authored",
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/news/",
-      "checksum_sha256": null,
+      "checksum_sha256": "9986b1d2f50583ef054b6602103f211274138437ddacea0f3531e32fb8a4ed0b",
       "replacement_status": "current"
     },
     {
       "id": "site-placeholder-about",
       "path": "src/about/index.html",
       "title": "About",
-      "summary": "Public site boundary and project information placeholder.",
+      "summary": "Public overview of the trilogy, its creator, and the boundary between released and private material.",
       "content_type": "page",
-      "spoiler_tier": "placeholder",
-      "approval_state": "placeholder",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
       "rights_status": "repository-authored",
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/about/",
-      "checksum_sha256": null,
+      "checksum_sha256": "ccddafa295bb91d971dc771dd876c970b18226c32d36dc0ab813dc6833590418",
       "replacement_status": "current"
     },
     {
@@ -282,6 +282,96 @@
       "rights_basis": "Project-generated original artwork approved for this public marketing release; no third-party source asset incorporated.",
       "attribution_required": false,
       "metadata_review": "stripped"
+    },
+    {
+      "id": "press-industry",
+      "path": "src/press/index.html",
+      "title": "Press & Industry",
+      "summary": "Approved public press positioning, creator information, and downloadable trilogy hero artwork.",
+      "content_type": "press",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/press/",
+      "checksum_sha256": "c7293cce15a30a4c7c269c84432258479592df3dab3e780f5817674f3c5dd3d3",
+      "replacement_status": "current"
+    },
+    {
+      "id": "news-public-trilogy-site",
+      "path": "src/news/2026-08-08-public-trilogy-site/index.html",
+      "title": "The trilogy has a public home",
+      "summary": "Public update announcing the trilogy website presentation without making a publication-date claim.",
+      "content_type": "news",
+      "spoiler_tier": "premise",
+      "approval_state": "published",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": "2026-08-08",
+      "canonical_url": "/news/2026-08-08-public-trilogy-site/",
+      "checksum_sha256": "b698b7c2751fb84d58ae4ea427e47a381513859c0903773005a81d7b22e6a202",
+      "replacement_status": "current"
+    },
+    {
+      "id": "style-editorial-v1",
+      "path": "src/styles/editorial.v1.css",
+      "title": "Editorial surfaces v1",
+      "summary": "Shared responsive styles for press, news, about, and public editorial pages.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/styles/editorial.v1.css",
+      "checksum_sha256": "5984a6af420a9fb9a4dece0781f6b22d8b35f291141fe29e5d79b748c64d7f6b",
+      "replacement_status": "current"
+    },
+    {
+      "id": "feed-atom",
+      "path": "src/feed.xml",
+      "title": "The Fatherless Atom feed",
+      "summary": "Machine-readable public update feed for readers who do not use a newsletter provider.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/feed.xml",
+      "checksum_sha256": "a6554dcdc927613245fee4738f4858158ccf377cf90196e128eb8cf0f0c209af",
+      "replacement_status": "current"
+    },
+    {
+      "id": "robots-policy",
+      "path": "src/robots.txt",
+      "title": "Robots policy",
+      "summary": "Public crawler policy and sitemap discovery pointer.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/robots.txt",
+      "checksum_sha256": "335b70c93939c13600ab0c707e449296f3952afe4af374e33ff3e50f34a5ce5a",
+      "replacement_status": "current"
+    },
+    {
+      "id": "sitemap",
+      "path": "src/sitemap.xml",
+      "title": "Public sitemap",
+      "summary": "Sitemap containing only approved or published reader-facing public artifacts.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/sitemap.xml",
+      "checksum_sha256": "03248c8e6f1aec6573a0f6d9aa92bc4c0c260a4bdef48eb12cb4c326b3ad3f39",
+      "replacement_status": "current"
     }
   ]
 }
