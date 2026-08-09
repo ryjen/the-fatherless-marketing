@@ -13,7 +13,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/",
-      "checksum_sha256": "38f471bde726d076fb26d8f070bfbe5286f1f0a5f23f0bf3f8dc2b1e3eb75724",
+      "checksum_sha256": "450fe7bee451817c59a3340ea3212e6101e98d4053966ef1a90eb6994b3db08e",
       "replacement_status": "current"
     },
     {
@@ -167,17 +167,17 @@
       "replacement_status": "current"
     },
     {
-      "id": "style-home-v1",
-      "path": "src/styles/home.v1.css",
-      "title": "Homepage trilogy composition v1",
-      "summary": "Homepage-only structural and era-preview styles for the trilogy overview.",
+      "id": "style-home-v2",
+      "path": "src/styles/home.v2.css",
+      "title": "Homepage cinematic composition v2",
+      "summary": "Screen-first homepage hierarchy with integrated navigation, centered cinematic hero, compact trilogy panels, and an intentional recurring-question section.",
       "content_type": "site-asset",
       "spoiler_tier": "placeholder",
       "approval_state": "placeholder",
       "rights_status": "repository-authored",
       "provenance_class": "public-native",
       "publication_date": null,
-      "canonical_url": "/styles/home.v1.css",
+      "canonical_url": "/styles/home.v2.css",
       "checksum_sha256": null,
       "replacement_status": "current"
     },
