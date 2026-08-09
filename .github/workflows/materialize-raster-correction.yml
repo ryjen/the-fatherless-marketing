@@ -13,24 +13,21 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
-      - run: npm ci
+      - name: Install validation dependencies
+        run: npm install --no-package-lock --no-audit --no-fund
       - name: Apply correction
         run: python3 scripts/apply-raster-correction.py
       - name: Validate source boundary
-        run: python3 scripts/publication.py source
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Test responsive media
         run: node tests/test-responsive-media.mjs
       - name: Build
-        run: ./scripts/build.sh
+        run: sh scripts/build.sh
       - name: Validate
-        run: ./scripts/validate.sh
+        run: sh scripts/validate.sh
       - name: Commit corrected tree
         run: |
           git config user.name github-actions[bot]
