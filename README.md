@@ -11,6 +11,10 @@ This repository contains only material intentionally approved for public release
 - This repository must build and deploy without access to any private repository, private token, or cross-repository secret.
 - Public history must remain clean: do not mirror, subtree, or transplant private Git history.
 
+## Design reference
+
+The current landing-page composition target is preserved in [`docs/site-concept-reference.md`](docs/site-concept-reference.md). It is a reference mockup rather than deployable content; the visual system, approved era palettes, public manifest, and content-governance rules remain authoritative.
+
 ## Development
 
 The site is static HTML/CSS with a manifest-authoritative publication boundary. Python performs source/build validation; Node dependencies are development-only tooling for responsive-media generation and Chromium smoke tests.
