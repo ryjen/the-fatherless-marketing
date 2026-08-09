@@ -1,0 +1,66 @@
+body[data-theme='original'] {
+  --bg: #090d12;
+  --surface: #101820;
+  --surface-strong: #17232d;
+  --text: #edf1f0;
+  --muted: #b8c4c4;
+  --accent: #76a8a0;
+  --accent-strong: #9bcac1;
+  --border: #40505a;
+  --focus: #d7fff7;
+  --shadow: 0 1.25rem 3.25rem rgb(0 0 0 / 0.42);
+}
+
+body[data-theme='original'] .brand,
+body[data-theme='original'] h1,
+body[data-theme='original'] h2,
+body[data-theme='original'] h3 {
+  font-family: var(--font-sans);
+}
+
+body[data-theme='original'] h1,
+body[data-theme='original'] h2 {
+  letter-spacing: -0.035em;
+}
+
+body[data-theme='original'] h1 {
+  font-weight: 720;
+}
+
+body[data-theme='original'] h2 {
+  font-weight: 680;
+}
+
+body[data-theme='original'] .hero::before {
+  background:
+    radial-gradient(circle at 76% 18%, rgb(118 168 160 / 0.18), transparent 24rem),
+    radial-gradient(circle at 18% 84%, rgb(132 68 91 / 0.16), transparent 26rem),
+    linear-gradient(142deg, #17232d, #0c1218 48%, #090d12 76%);
+}
+
+body[data-theme='original'] .hero::after {
+  background:
+    linear-gradient(108deg, rgb(9 13 18 / 0.12), transparent 52%),
+    linear-gradient(to top, rgb(9 13 18 / 0.98), rgb(9 13 18 / 0.22) 72%);
+}
+
+body[data-theme='original'] .hero__panel {
+  border-color: #40505a;
+  background: #101820;
+  background: color-mix(in srgb, #101820 93%, transparent);
+}
+
+body[data-theme='original'] .panel {
+  background:
+    linear-gradient(120deg, rgb(118 168 160 / 0.035), transparent 42%),
+    var(--surface);
+}
+
+body[data-theme='original'] blockquote {
+  border-left-color: #84516a;
+}
+
+body[data-theme='original'] .theme-mark::before {
+  border-radius: 0.12rem;
+  transform: rotate(45deg);
+}
