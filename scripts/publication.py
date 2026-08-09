@@ -17,6 +17,7 @@ TEXT_SUFFIXES = {".html", ".md", ".txt"}
 PUBLIC_TEXT_SUFFIXES = {".html", ".md", ".txt", ".json", ".yml", ".yaml", ".css", ".js", ".xml", ".svg"}
 CREATOR_CLASSES = {"author-created", "commissioned", "generated", "stock", "public-domain", "historical", "contributor-owned"}
 METADATA_REVIEWS = {"stripped", "reviewed-retained"}
+RESPONSIVE_FORMATS = {"avif", "webp"}
 FORBIDDEN_REPO_HASHES = {"b2039a6916963fafa6c5f93fc6f90cfdbb2aa9fbb3cc7c2792f97a9661a23d6b"}
 REPO_SLUG_RE = re.compile(r"(?i)(?=([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+))")
 SECRET_RES = [
@@ -68,6 +69,17 @@ def normalized_repo_path(raw: object) -> PurePosixPath:
         fail(f"manifest path must be normalized and repository-relative: {raw}")
     if not path.parts or path.parts[0] not in {"src", "staging"}:
         fail(f"manifest path must live under src/ or staging/: {raw}")
+    return path
+
+
+def normalized_output_path(raw: object) -> PurePosixPath:
+    if not isinstance(raw, str) or not raw:
+        fail("responsive derivative path must be a non-empty string")
+    path = PurePosixPath(raw)
+    if path.is_absolute() or path.as_posix() != raw or any(part in {"", ".", ".."} for part in path.parts):
+        fail(f"responsive derivative path must be normalized and dist-relative: {raw}")
+    if not path.parts or path.parts[0] != "media":
+        fail(f"responsive derivative must live under dist/media/: {raw}")
     return path
 
 
@@ -138,6 +150,7 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
     manifest = load_manifest(root)
     seen_ids: set[str] = set()
     entries_by_path: dict[str, dict] = {}
+    derivative_paths: set[str] = set()
     required = {"id", "path", "content_type", "spoiler_tier", "approval_state", "rights_status", "provenance_class", "checksum_sha256", "replacement_status"}
 
     for artifact in manifest["artifacts"]:
@@ -213,12 +226,54 @@ def validate_manifest(root: Path) -> tuple[dict, dict[str, dict]]:
                 if markers:
                     fail(f"embedded metadata present despite stripped status for {artifact_id}: {', '.join(markers)}")
 
+        derivatives = artifact.get("responsive_derivatives")
+        if derivatives is not None:
+            if repo_path.parts[0] != "staging" or state not in {"approved", "published"}:
+                fail(f"responsive media master must be approved and staged: {artifact_id}")
+            if disk_path.suffix.lower() not in MEDIA_SUFFIXES:
+                fail(f"responsive media master must be media: {artifact_id}")
+            if not isinstance(derivatives, list) or not derivatives:
+                fail(f"responsive_derivatives must be a non-empty list: {artifact_id}")
+            for derivative in derivatives:
+                if not isinstance(derivative, dict):
+                    fail(f"responsive derivative must be an object: {artifact_id}")
+                derivative_required = {"path", "width", "height", "format", "checksum_sha256"}
+                derivative_missing = derivative_required - derivative.keys()
+                if derivative_missing:
+                    fail(f"responsive derivative missing fields for {artifact_id}: {sorted(derivative_missing)}")
+                output_path = normalized_output_path(derivative["path"])
+                output_raw = output_path.as_posix()
+                if output_raw in derivative_paths:
+                    fail(f"duplicate responsive derivative path: {output_raw}")
+                derivative_paths.add(output_raw)
+                fmt = derivative["format"]
+                if fmt not in RESPONSIVE_FORMATS or output_path.suffix.lower() != f".{fmt}":
+                    fail(f"invalid responsive derivative format/path: {output_raw}")
+                width = derivative["width"]
+                height = derivative["height"]
+                if not isinstance(width, int) or isinstance(width, bool) or width <= 0:
+                    fail(f"invalid responsive derivative width: {output_raw}")
+                if not isinstance(height, int) or isinstance(height, bool) or height <= 0:
+                    fail(f"invalid responsive derivative height: {output_raw}")
+                derivative_checksum = derivative["checksum_sha256"]
+                if not isinstance(derivative_checksum, str) or re.fullmatch(r"[0-9a-f]{64}", derivative_checksum) is None:
+                    fail(f"responsive derivative requires sha256: {output_raw}")
+
         serialized = json.dumps(artifact).lower()
         if contains_forbidden_repo(serialized):
             fail(f"private repository reference detected in {artifact_id}")
         for forbidden in ("private_issue", "private_path", "private_revision"):
             if forbidden in serialized:
                 fail(f"private provenance field/reference detected in {artifact_id}")
+
+    src_dist_paths = {
+        Path(*PurePosixPath(raw).parts[1:]).as_posix()
+        for raw, artifact in entries_by_path.items()
+        if raw.startswith("src/") and artifact["approval_state"] in PUBLISHABLE_STATES
+    }
+    overlap = derivative_paths & src_dist_paths
+    if overlap:
+        fail(f"responsive derivative collides with deployable source: {sorted(overlap)}")
 
     src = root / "src"
     if src.exists():
@@ -244,6 +299,14 @@ def publishable_paths(root: Path) -> list[Path]:
     return sorted(Path(raw) for raw, artifact in entries.items() if raw.startswith("src/") and artifact["approval_state"] in PUBLISHABLE_STATES)
 
 
+def derivative_entries(manifest: dict) -> dict[str, dict]:
+    outputs: dict[str, dict] = {}
+    for artifact in manifest["artifacts"]:
+        for derivative in artifact.get("responsive_derivatives") or []:
+            outputs[derivative["path"]] = derivative
+    return outputs
+
+
 def build(root: Path) -> None:
     paths = publishable_paths(root)
     dist = root / "dist"
@@ -257,16 +320,34 @@ def build(root: Path) -> None:
 
 
 def validate_dist(root: Path) -> None:
-    expected = {Path(*path.parts[1:]).as_posix(): root / path for path in publishable_paths(root)}
+    manifest, entries = validate_manifest(root)
+    expected_sources = {
+        Path(*PurePosixPath(raw).parts[1:]).as_posix(): root / raw
+        for raw, artifact in entries.items()
+        if raw.startswith("src/") and artifact["approval_state"] in PUBLISHABLE_STATES
+    }
+    derivatives = derivative_entries(manifest)
+    expected_paths = set(expected_sources) | set(derivatives)
+
     dist = root / "dist"
     if not dist.is_dir():
         fail("missing dist/")
     actual = {path.relative_to(dist).as_posix(): path for path in dist.rglob("*") if path.is_file()}
-    if set(actual) != set(expected):
-        fail(f"dist contents differ from manifest: expected={sorted(expected)} actual={sorted(actual)}")
-    for rel, source in expected.items():
+    if set(actual) != expected_paths:
+        fail(f"dist contents differ from manifest: expected={sorted(expected_paths)} actual={sorted(actual)}")
+
+    for rel, source in expected_sources.items():
         if actual[rel].read_bytes() != source.read_bytes():
             fail(f"dist artifact differs from source: {rel}")
+
+    for rel, derivative in derivatives.items():
+        output = actual[rel]
+        actual_checksum = hashlib.sha256(output.read_bytes()).hexdigest()
+        if actual_checksum != derivative["checksum_sha256"]:
+            fail(f"responsive derivative checksum mismatch: {rel}")
+        markers = media_metadata_markers(output)
+        if markers:
+            fail(f"responsive derivative contains embedded metadata: {rel}: {', '.join(markers)}")
 
     index = dist / "index.html"
     if not index.is_file():
