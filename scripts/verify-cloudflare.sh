@@ -19,14 +19,22 @@ host="$(printf '%s' "$base" | sed -E 's#^https://([^/]+)/.*#\1#')"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 
-curl_common='--fail --silent --show-error --connect-timeout 10 --max-time 30'
+browser_ua='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+
+browser_curl() {
+  curl --user-agent "$browser_ua" \
+    --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' \
+    --header 'Accept-Language: en-US,en;q=0.9' \
+    "$@"
+}
 
 # Verify that the custom domain is actually passing through Cloudflare and
 # still serves the current site marker over HTTPS. Redirects are followed,
 # but the final URL must remain on the configured custom host.
-# shellcheck disable=SC2086
-home_effective_url="$(curl $curl_common --location --dump-header "$tmp/https.headers" \
-  --output "$tmp/home.html" --write-out '%{url_effective}' "$base")"
+home_effective_url="$(browser_curl --fail --silent --show-error \
+  --connect-timeout 10 --max-time 30 --location \
+  --dump-header "$tmp/https.headers" --output "$tmp/home.html" \
+  --write-out '%{url_effective}' "$base")"
 
 case "$home_effective_url" in
   "https://${host}"|"https://${host}/"|"https://${host}/"*) ;;
@@ -49,9 +57,8 @@ grep -Eiq '^cf-ray:' "$tmp/https.headers" || {
 # HTTP must not remain a parallel plaintext public path.
 # Do not follow the redirect so the edge behavior itself is tested.
 http_url="http://${host}/"
-# shellcheck disable=SC2086
-curl $curl_common --max-redirs 0 --dump-header "$tmp/http.headers" \
-  --output /dev/null "$http_url"
+browser_curl --fail --silent --show-error --connect-timeout 10 --max-time 30 \
+  --max-redirs 0 --dump-header "$tmp/http.headers" --output /dev/null "$http_url"
 
 grep -Eq '^HTTP/[0-9.]+ (301|302|307|308)' "$tmp/http.headers" || {
   echo "Cloudflare HTTP endpoint did not return a redirect: $http_url" >&2
@@ -70,9 +77,10 @@ esac
 
 # Fetch the versioned stylesheet through the edge so stale-cache regressions
 # fail on content, while cache disposition is reported for diagnosis.
-# shellcheck disable=SC2086
-css_effective_url="$(curl $curl_common --location --dump-header "$tmp/css.headers" \
-  --output "$tmp/base.css" --write-out '%{url_effective}' "${base}styles/base.v1.css")"
+css_effective_url="$(browser_curl --fail --silent --show-error \
+  --connect-timeout 10 --max-time 30 --location \
+  --dump-header "$tmp/css.headers" --output "$tmp/base.css" \
+  --write-out '%{url_effective}' "${base}styles/base.v1.css")"
 
 case "$css_effective_url" in
   "https://${host}/styles/base.v1.css") ;;
