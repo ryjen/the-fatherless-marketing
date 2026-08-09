@@ -37,9 +37,11 @@ Generated output is written to `dist/` and must be reproducible from committed p
 
 ## Deployment
 
-CI validates every pull request and push to `main`. Non-PR `main` runs upload the validated `dist/` artifact for GitHub Pages, and the deployment job publishes it when Pages is enabled for the repository. If Pages has not yet been enabled, the job exits safely with a notice instead of requiring a long-lived credential.
+CI validates every pull request and push to `main`. Successful `main` runs upload the validated `dist/` artifact and deploy it through GitHub Pages using GitHub Actions as the only publishing source. The production custom domain is then probed through Cloudflare for origin identity, current assets, HTTPS, and edge behavior.
 
-Initial Pages activation is a one-time repository setting: **Settings → Pages → Source: GitHub Actions**. After that, rerun **Validate public site** or push a new validated `main` change. The workflow verifies the deployed HTTPS origin after publication. Custom-domain cutover remains gated on successful direct-origin, DNS, TLS, cache, and rollback verification. See `docs/deployment.md`.
+The current production path has been verified end-to-end at `https://fatherless.ryanjennin.gs/`: publication checks, responsive-media validation, build validation, Chromium browser smoke, GitHub Pages deployment, and the Cloudflare edge probe have all completed successfully.
+
+Pages must remain configured as **Settings → Pages → Source: GitHub Actions**. Do not switch to branch publishing; that would bypass the validated `dist/` artifact. Cutover, verification, cache, and rollback procedures are documented in `docs/deployment.md`.
 
 ## Rights
 
