@@ -4,11 +4,13 @@ This visual system is a public presentation layer. Mood guidance may reflect app
 
 ## Foundations
 
-The original volume is the shared default layer in `src/styles/base.v1.css`. Prequel and sequel styles are small inherited overrides:
+The shared structural layer lives in `src/styles/base.v1.css`. Prequel and sequel remain inherited variants, while the original volume uses the shared structure as its primary theme.
 
-- original — historical, institutional, sacred, and human; warm near-black surfaces, parchment text, restrained gold accents;
+- original — nocturnal, institutional, human, and politically tense; graphite and blue-black surfaces, cold stone text, oxidized teal accents, and restrained muted-wine atmospheric notes;
 - prequel — elemental, prehistoric, ember, stone, water, and survival; warmer earth surfaces and ember accents;
 - sequel — technological, networked, luminous, and plural; deep blue-black surfaces and cyan-green light accents.
+
+The original must not default to sepia, parchment, brown-gold historical styling, devotional imagery, or familiar Biblical-poster composition. Its public visual tone should read as a contemporary prestige political drama photographed inside an ancient world rather than as religious illustration.
 
 The themes change atmosphere, not interaction patterns. Navigation, typography scale, spacing, controls, focus treatment, reading measure, and responsive behavior remain shared.
 
@@ -16,8 +18,9 @@ The themes change atmosphere, not interaction patterns. Navigation, typography s
 
 Use resilient system stacks only until a public font license and performance case are approved.
 
-- display/editorial: Georgia with Times fallback;
-- navigation, controls, labels, metadata: system sans-serif stack;
+- original display/editorial headings may use the system sans stack to create a more contemporary, institutional voice;
+- long-form prose remains readable through a resilient serif stack;
+- navigation, controls, labels, and metadata use the system sans-serif stack;
 - body copy: minimum 1rem with 1.65 line height;
 - headings use `clamp()` rather than viewport-only sizing;
 - prose measure targets 70 characters.
@@ -27,6 +30,14 @@ No page may require a custom font to remain readable or preserve layout.
 ## Palette and contrast
 
 Theme tokens are declared as CSS custom properties. Normal text and interactive foreground/background combinations must meet WCAG AA. Hero copy is never placed directly on uncontrolled imagery: `.hero__panel` provides a high-opacity bounded surface with a solid-color fallback before enhancement.
+
+The original palette should preserve separation from both neighboring eras:
+
+- avoid the prequel's ember/earth dominance;
+- avoid the sequel's bright cyan/neon language;
+- use oxidized teal as a restrained material color rather than a luminous technology cue;
+- use muted wine only as secondary tension, never as a large red field;
+- keep the primary impression graphite, cold stone, and controlled darkness.
 
 Translucency and `color-mix()` are enhancements only. The first declared background remains readable when those features are unavailable.
 
@@ -66,6 +77,14 @@ The layout is content-first and fluid. Representative smoke widths are 375×812 
 ## Imagery
 
 Approved raster imagery should be processed with `scripts/generate-responsive-media.mjs` after its rights/provenance and metadata review is complete.
+
+For the original volume, prefer imagery that feels observational and socially embedded rather than iconic or devotional:
+
+- environmental scenes, civic architecture, thresholds, public space, groups, and asymmetric portraits;
+- human subjects integrated into their surroundings rather than isolated as sacred icons;
+- cool, controlled lighting and materially plausible stone, metal, fabric, water, and atmosphere;
+- restrained celestial or environmental unease rather than divine beams, halos, stars, or overt religious shorthand;
+- no sepia wash, faux parchment, gold-dominant grading, Renaissance devotional poses, or generic Biblical cover art.
 
 Production markup should use `<picture>` with:
 
