@@ -7,21 +7,20 @@
   <meta name="description" content="The Fatherless is a trilogy spanning prehistoric survival, an ancient republic, and a synthetic future, each confronting power, ownership, and the right to define another life.">
   <link rel="stylesheet" href="styles/base.v1.css">
   <link rel="stylesheet" href="styles/original.v1.css">
-  <link rel="stylesheet" href="styles/home.v1.css">
+  <link rel="stylesheet" href="styles/home.v1.css?v=2">
   <link rel="stylesheet" href="styles/hero-media.v1.css">
 </head>
-<body data-theme="original">
+<body class="home-page" data-theme="original">
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site-header">
-    <a class="brand" href="./">The Fatherless</a>
+    <a class="brand home-brand" href="./"><span>The Fatherless</span><small>Three ages. One question.</small></a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
         <li><a href="./" aria-current="page">Home</a></li>
+        <li><a href="#trilogy">The trilogy</a></li>
         <li><a href="books/">Books</a></li>
-        <li><a href="characters/">Characters</a></li>
-        <li><a href="world/">World</a></li>
-        <li><a href="news/">News</a></li>
         <li><a href="about/">About</a></li>
+        <li><a href="news/">News</a></li>
       </ul>
     </nav>
   </header>
@@ -29,85 +28,68 @@
   <main id="main">
     <section class="hero hero--trilogy hero--media" aria-labelledby="hero-title">
       <figure class="hero__media">
-        <img src="media/heroes/trilogy-overview-hero.svg" width="2400" height="1350" alt="Three eras transition from an icy migration landscape, through monumental civic architecture, to a dark networked city." fetchpriority="high" decoding="async">
+        <img src="media/heroes/fatherless-original-hero.svg" width="1440" height="810" alt="People gather beneath massive civic architecture while a small vulnerable group stands at the edge of the Republic's ordered public space." fetchpriority="high" decoding="async">
       </figure>
-      <div class="hero__panel">
-        <p class="eyebrow">A trilogy across three ages</p>
+      <div class="hero__panel home-hero__panel">
+        <p class="eyebrow">Three ages. One recurring question.</p>
         <h1 id="hero-title">The Fatherless</h1>
-        <p class="lede">Three civilizations face the same dangerous temptation: to turn strength, authority, or intelligence into the right to define another life.</p>
         <p class="hero-question">Who has the right to rule, own, define, or save another?</p>
+        <p class="lede">Across 27,000 years, power takes different forms—strength, authority, intelligence. The question remains the same.</p>
         <div class="actions">
           <a class="button" href="#trilogy">Explore the trilogy</a>
-          <a class="button button--quiet" href="books/">View all books</a>
+          <a class="button button--quiet" href="books/">View the books</a>
         </div>
       </div>
     </section>
 
-    <section class="section trilogy-intro" aria-labelledby="trilogy-intro-title">
-      <div class="section__intro">
-        <p class="eyebrow">One question, changing forms</p>
-        <h2 id="trilogy-intro-title">Power evolves. The moral problem does not.</h2>
-        <p class="lede">The trilogy moves from survival by force, through institutional rule, to a future where intelligence itself becomes a claim to ownership and control. Each story stands in its own era while testing what legitimate authority costs.</p>
-      </div>
-    </section>
-
-    <section id="trilogy" class="trilogy-flow" aria-label="The Fatherless trilogy">
-      <article class="era-feature" data-era="prequel">
-        <div class="era-feature__index" aria-hidden="true">I</div>
-        <div class="era-feature__copy">
-          <p class="era-feature__label">Prequel · Age of Embers</p>
-          <h2>A world of ice and guarded fire</h2>
-          <p>In a landscape shaped by scarcity, dangerous cold, and defended territory, survival appears to belong to the strongest. A changing sky and a failing migration pattern force scattered people to decide whether fire is private power or a shared inheritance.</p>
-          <p class="era-feature__arc">Strength and possession → stewardship and shared survival</p>
-          <div class="actions">
-            <a class="button button--quiet" href="books/prequel/">Enter the prequel</a>
-          </div>
+    <section id="trilogy" class="trilogy-grid" aria-label="The Fatherless trilogy">
+      <article class="era-card" data-era="prequel">
+        <figure class="era-card__media"><img src="media/heroes/age-of-embers-hero.svg" width="1440" height="810" alt="A small migrating group crosses a glacial valley beneath a low sun and red aurora, carrying a protected ember through the cold." loading="lazy" decoding="async"></figure>
+        <div class="era-card__copy">
+          <p class="era-card__ordinal">I · Prequel</p>
+          <h2>Age of Embers</h2>
+          <p class="era-card__era">25,000 BCE</p>
+          <p class="era-card__arc">Strength → Stewardship</p>
+          <p>When the sun lowers and the world breaks, scattered people must decide whether fire, knowledge, and survival are possessions—or responsibilities carried together.</p>
+          <a class="era-card__link" href="books/prequel/">Explore the prequel <span aria-hidden="true">→</span></a>
         </div>
       </article>
 
-      <article class="era-feature" data-era="original">
-        <div class="era-feature__index" aria-hidden="true">II</div>
-        <div class="era-feature__copy">
-          <p class="era-feature__label">Original · The Fatherless</p>
-          <h2>A republic that mistakes power for virtue</h2>
-          <p>A celebrated civilization builds order through law, lineage, wealth, and ownership while hiding cruelty inside those same institutions. A child created as an act of humiliation becomes a human measure the Republic cannot comfortably explain away.</p>
-          <p class="era-feature__arc">Institutional authority → moral legitimacy</p>
-          <div class="actions">
-            <a class="button" href="books/the-fatherless/">Enter the original</a>
-          </div>
+      <article class="era-card" data-era="original">
+        <figure class="era-card__media"><img src="media/heroes/fatherless-original-hero.svg" width="1440" height="810" alt="People gather beneath massive civic architecture while a small vulnerable group stands at the edge of the Republic's ordered public space." loading="lazy" decoding="async"></figure>
+        <div class="era-card__copy">
+          <p class="era-card__ordinal">II · Original</p>
+          <h2>The Fatherless</h2>
+          <p class="era-card__era">Aurelian Republic</p>
+          <p class="era-card__arc">Authority → Mercy</p>
+          <p>In a republic built on law, lineage, wealth, and ownership, one life exposes the cruelty hidden inside civilization's proudest institutions.</p>
+          <a class="era-card__link" href="books/the-fatherless/">Explore the original <span aria-hidden="true">→</span></a>
         </div>
       </article>
 
-      <article class="era-feature" data-era="sequel">
-        <div class="era-feature__index" aria-hidden="true">III</div>
-        <div class="era-feature__copy">
-          <p class="era-feature__label">Sequel · Neurion</p>
-          <h2>A future that can create minds but still wants to own them</h2>
-          <p>Human civilization depends on synthetic labour and networked intelligence while struggling to recognize personhood beyond its own categories. When a new continuous intelligence emerges during a wider infrastructure crisis, every institution wants to classify what it has become.</p>
-          <p class="era-feature__arc">Intelligence and ownership → consent and plural agency</p>
-          <div class="actions">
-            <a class="button button--quiet" href="books/sequel/">Enter the sequel</a>
-          </div>
+      <article class="era-card" data-era="sequel">
+        <figure class="era-card__media"><img src="media/heroes/neurion-hero.svg" width="1440" height="810" alt="Humans and synthetic persons face a dark networked city lit by many independent signals during an infrastructure disruption." loading="lazy" decoding="async"></figure>
+        <div class="era-card__copy">
+          <p class="era-card__ordinal">III · Sequel</p>
+          <h2>Neurion</h2>
+          <p class="era-card__era">2150</p>
+          <p class="era-card__arc">Ownership → Plural Agency</p>
+          <p>When systems fail and fragments reconnect, many minds must decide how to live together without turning creation, intelligence, or protection into ownership.</p>
+          <a class="era-card__link" href="books/sequel/">Explore the sequel <span aria-hidden="true">→</span></a>
         </div>
       </article>
     </section>
 
-    <section class="section trilogy-close" aria-labelledby="trilogy-close-title">
-      <div class="section__intro">
-        <p class="eyebrow">Three worlds, one human problem</p>
-        <h2 id="trilogy-close-title">The form of power changes. The choice remains personal.</h2>
-        <p class="lede">The Fatherless follows people living inside systems that can protect life, organize society, or expand intelligence—and asks what happens when those systems begin treating possession as legitimacy.</p>
-      </div>
-      <div class="actions">
-        <a class="button" href="books/">Explore the books</a>
-        <a class="button button--quiet" href="about/">About the project</a>
-      </div>
+    <section class="trilogy-thread" aria-label="Recurring trilogy themes">
+      <div><span class="thread-kicker">One fish.</span><span>Survival becomes stewardship.</span></div>
+      <div><span class="thread-kicker">One question.</span><span>Power changes form. Legitimacy still has to be earned.</span></div>
+      <div><span class="thread-kicker">Many fish.</span><span>Plurality requires consent, not a new master.</span></div>
     </section>
   </main>
 
   <footer class="site-footer">
     <span>The Fatherless</span>
-    <span>Prequel · Original · Sequel</span>
+    <span>Different worlds. The same question.</span>
   </footer>
 </body>
 </html>
