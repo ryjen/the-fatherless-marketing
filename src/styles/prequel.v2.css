@@ -1,0 +1,50 @@
+body[data-theme='prequel'] {
+  --bg: #071018;
+  --surface: #0d1b24;
+  --surface-strong: #152b38;
+  --text: #eef5f4;
+  --muted: #b9cdd0;
+  --accent: #d96a55;
+  --accent-strong: #f08a63;
+  --border: #4b6973;
+  --focus: #bde9f1;
+  --shadow: 0 1.25rem 3.25rem rgb(0 0 0 / 0.46);
+}
+
+body[data-theme='prequel'] .hero::before {
+  background:
+    radial-gradient(ellipse at 68% 10%, rgb(217 80 72 / 0.2), transparent 18rem),
+    radial-gradient(ellipse at 80% 24%, rgb(187 76 83 / 0.1), transparent 28rem),
+    radial-gradient(circle at 18% 78%, rgb(104 158 179 / 0.2), transparent 26rem),
+    linear-gradient(150deg, #183545, #0c1a23 54%, #071018 78%);
+}
+
+body[data-theme='prequel'] .hero::after {
+  background:
+    linear-gradient(110deg, rgb(7 16 24 / 0.08), transparent 52%),
+    linear-gradient(to top, rgb(7 16 24 / 0.98), rgb(7 16 24 / 0.18) 72%);
+}
+
+body[data-theme='prequel'] .hero__panel {
+  background: #0d1b24;
+  background: color-mix(in srgb, #0d1b24 93%, transparent);
+  border-color: #4b6973;
+}
+
+body[data-theme='prequel'] .panel {
+  border-left-color: var(--accent);
+  background:
+    linear-gradient(125deg, rgb(104 158 179 / 0.055), transparent 44%),
+    var(--surface);
+}
+
+body[data-theme='prequel'] blockquote {
+  border-left-color: #6ea9b9;
+}
+
+body[data-theme='prequel'] .theme-mark::before {
+  width: 0.9rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6ea9b9 0 55%, var(--accent) 55%);
+}

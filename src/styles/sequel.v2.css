@@ -1,0 +1,53 @@
+body[data-theme='sequel'] {
+  --bg: #050913;
+  --surface: #0a1424;
+  --surface-strong: #10243a;
+  --text: #eaf7fb;
+  --muted: #b5ccd8;
+  --accent: #64d7d4;
+  --accent-strong: #8ce7ff;
+  --border: #3e6075;
+  --focus: #c8fbff;
+  --shadow: 0 1.25rem 3.25rem rgb(0 0 0 / 0.48);
+}
+
+body[data-theme='sequel'] .hero::before {
+  background:
+    radial-gradient(circle at 78% 18%, rgb(100 215 212 / 0.18), transparent 21rem),
+    radial-gradient(circle at 24% 72%, rgb(145 112 201 / 0.14), transparent 24rem),
+    radial-gradient(circle at 58% 58%, rgb(89 168 255 / 0.08), transparent 18rem),
+    linear-gradient(145deg, #10243a, #091426 56%, #050913 82%);
+}
+
+body[data-theme='sequel'] .hero::after {
+  background:
+    linear-gradient(105deg, rgb(5 9 19 / 0.08), transparent 50%),
+    linear-gradient(to top, rgb(5 9 19 / 0.98), rgb(5 9 19 / 0.15) 72%);
+}
+
+body[data-theme='sequel'] .hero__panel {
+  background: #0a1424;
+  background: color-mix(in srgb, #0a1424 93%, transparent);
+  border-color: #3e6075;
+}
+
+body[data-theme='sequel'] .panel {
+  border-left-style: solid;
+  border-left-color: var(--accent);
+  background:
+    radial-gradient(circle at 88% 12%, rgb(100 215 212 / 0.055), transparent 13rem),
+    radial-gradient(circle at 14% 88%, rgb(145 112 201 / 0.045), transparent 16rem),
+    var(--surface);
+}
+
+body[data-theme='sequel'] blockquote {
+  border-left-color: #9170c9;
+}
+
+body[data-theme='sequel'] .theme-mark::before {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0.55rem -0.18rem 0 -0.08rem #8ce7ff, 0.72rem 0.28rem 0 -0.12rem #9170c9;
+}

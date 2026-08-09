@@ -4,13 +4,17 @@ This visual system is a public presentation layer. Mood guidance may reflect app
 
 ## Foundations
 
-The shared structural layer lives in `src/styles/base.v1.css`. Prequel and sequel remain inherited variants, while the original volume uses the shared structure as its primary theme.
+The shared structural layer lives in `src/styles/base.v1.css`. Era-specific theme files inherit that structure without changing interaction patterns.
 
 - original — nocturnal, institutional, human, and politically tense; graphite and blue-black surfaces, cold stone text, oxidized teal accents, and restrained muted-wine atmospheric notes;
-- prequel — elemental, prehistoric, ember, stone, water, and survival; warmer earth surfaces and ember accents;
-- sequel — technological, networked, luminous, and plural; deep blue-black surfaces and cyan-green light accents.
+- prequel — glacial, prehistoric, exposed, and migratory; polar-night surfaces, glacier and meltwater blues, red sky-fire as the primary dramatic accent, and ember orange used only as a secondary carried-light cue;
+- sequel — networked, plural, civic, and distributed; near-black indigo surfaces, signal cyan and blue, restrained violet variation, and limited warning tones for system stress.
 
 The original must not default to sepia, parchment, brown-gold historical styling, devotional imagery, or familiar Biblical-poster composition. Its public visual tone should read as a contemporary prestige political drama photographed inside an ancient world rather than as religious illustration.
+
+The prequel must not default to brown cave-museum styling, faux stone textures, or a generic shaman-at-fire identity. Its dominant impression is cold scale, dangerous sky, movement, and water, with fire retained as a small but consequential element.
+
+The sequel must not default to neon cyberpunk, Matrix-like grids, glossy SaaS gradients, glowing robot faces, or a single luminous intelligence treated as the visual centre. Its dominant impression is many active centres sharing an unstable civic and technical environment.
 
 The themes change atmosphere, not interaction patterns. Navigation, typography scale, spacing, controls, focus treatment, reading measure, and responsive behavior remain shared.
 
@@ -33,11 +37,25 @@ Theme tokens are declared as CSS custom properties. Normal text and interactive 
 
 The original palette should preserve separation from both neighboring eras:
 
-- avoid the prequel's ember/earth dominance;
-- avoid the sequel's bright cyan/neon language;
+- avoid the prequel's sky-fire red and glacial-blue balance;
+- avoid the sequel's bright signal-cyan language;
 - use oxidized teal as a restrained material color rather than a luminous technology cue;
 - use muted wine only as secondary tension, never as a large red field;
 - keep the primary impression graphite, cold stone, and controlled darkness.
+
+The prequel palette should remain cold-first:
+
+- polar-night and deep-water surfaces carry most of the page;
+- glacier/meltwater blue provides environmental depth;
+- red sky-fire is the primary dramatic accent;
+- ember orange is subordinate and should not turn the page brown.
+
+The sequel palette should remain distributed rather than monochrome-neon:
+
+- near-black indigo and deep network blue carry most of the page;
+- cyan and signal blue indicate active information/light;
+- restrained violet introduces heterogeneous agency;
+- warning rose/red is reserved for conflict or system stress, not ambient decoration.
 
 Translucency and `color-mix()` are enhancements only. The first declared background remains readable when those features are unavailable.
 
@@ -86,6 +104,20 @@ For the original volume, prefer imagery that feels observational and socially em
 - restrained celestial or environmental unease rather than divine beams, halos, stars, or overt religious shorthand;
 - no sepia wash, faux parchment, gold-dominant grading, Renaissance devotional poses, or generic Biblical cover art.
 
+For the prequel, prefer:
+
+- glacial landscapes, exposed horizons, migration, animal movement, water, and dangerous sky;
+- small human figures against environmental scale rather than heroic caveman portraiture;
+- fire as carried survival or contested resource rather than a dominant ritual-object poster;
+- cold-first grading with sky-fire red used as event/tension rather than as a warm overall wash.
+
+For the sequel, prefer:
+
+- civic infrastructure, partial darkness, distributed signals, crowds, and multiple centres of agency;
+- humans and synthetic persons sharing environments rather than a single robot or holographic face;
+- visual patterns that imply networks or shoals without turning into literal code rain or a glowing grid;
+- technological presence embedded in lived public space rather than detached futuristic spectacle.
+
 Production markup should use `<picture>` with:
 
 1. AVIF `srcset`;
@@ -105,6 +137,8 @@ Motion is optional enhancement, never a comprehension dependency. Prefer small o
 ## Cache integrity
 
 Public stylesheets use explicit versioned filenames such as `base.v1.css`. Any byte-changing stylesheet release must increment the filename version before deployment when stale CDN/browser caches could mix incompatible HTML and CSS. HTML refers only to versioned public stylesheet paths.
+
+The first era-specific reset after the original-theme split uses `prequel.v2.css` and `sequel.v2.css`; the v1 files are removed from the deployable source rather than rewritten in place.
 
 ## Performance budgets
 
