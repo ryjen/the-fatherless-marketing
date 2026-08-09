@@ -115,9 +115,17 @@
   margin: 0;
 }
 
+.era-card__media picture,
 .era-card__media img {
   width: 100%;
   height: 100%;
+}
+
+.era-card__media picture {
+  display: block;
+}
+
+.era-card__media img {
   object-fit: cover;
   object-position: center;
   transition: transform 600ms ease;
