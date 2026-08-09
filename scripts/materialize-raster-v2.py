@@ -35,30 +35,22 @@ def decode_asset(name: str, pattern: str, expected: str) -> bytes:
     parts = sorted(STAGING.glob(pattern))
     if not parts:
         raise SystemExit(f"missing seed parts for {name}: {pattern}")
-
     texts = [clean_text(part) for part in parts]
     candidates: list[tuple[str, bytes]] = []
-
-    # Primary representation: the original Base64 stream split into text chunks.
     joined = "".join(texts)
     try:
         candidates.append(("joined", base64.b64decode(padded(joined), validate=False)))
     except Exception:
         pass
-
-    # Fallback for independently encoded chunks.
     try:
         candidates.append(("per-part", b"".join(base64.b64decode(padded(text), validate=False) for text in texts)))
     except Exception:
         pass
-
-    # Some earlier seed attempts may have inserted padding between chunks.
     try:
         no_internal_padding = "".join(text.rstrip("=") for text in texts)
         candidates.append(("strip-internal-padding", base64.b64decode(padded(no_internal_padding), validate=False)))
     except Exception:
         pass
-
     seen = []
     for mode, data in candidates:
         actual = digest(data)
@@ -70,7 +62,6 @@ def decode_asset(name: str, pattern: str, expected: str) -> bytes:
                 raise SystemExit(f"embedded metadata marker found in {name}")
             print(f"{name}: {mode}, {len(data)} bytes, sha256={actual}")
             return data
-
     raise SystemExit(f"could not reconstruct {name}; expected={expected}; candidates={'; '.join(seen)}")
 
 
@@ -190,7 +181,7 @@ class ProductionHeroMediaTests(unittest.TestCase):
             ROOT / 'src' / 'books' / 'the-fatherless' / 'index.html',
             ROOT / 'src' / 'books' / 'sequel' / 'index.html',
         ]
-        combined = '\n'.join(page.read_text() for page in pages)
+        combined = chr(10).join(page.read_text() for page in pages)
         self.assertNotIn('-hero.svg', combined)
         for name in ('age-of-embers-hero.webp', 'fatherless-original-hero.webp', 'neurion-hero.webp'):
             self.assertIn(name, combined)
