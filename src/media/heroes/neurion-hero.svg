@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+<defs>
+<filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="22"/></filter>
+<filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="17"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .055"/></feComponentTransfer></filter>
+<radialGradient id="v"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset=".7" stop-color="#000" stop-opacity=".04"/><stop offset="1" stop-color="#000" stop-opacity=".52"/></radialGradient>
+<g id="p" fill="currentColor"><circle cy="-55" r="9"/><path d="M-11-43H11L7-10H-7Z M-7-32L-19-12l5 3 11-16ZM7-32l11 18-4 4L3-25ZM-5-10-9 0h6l3-10ZM5-10 9 0H3L0-10Z"/></g>
+</defs>
+<defs>
+<linearGradient id="s" y2="1"><stop stop-color="#050718"/><stop offset="1" stop-color="#111b31"/></linearGradient>
+<pattern id="windows" width="74" height="72" patternUnits="userSpaceOnUse"><rect x="15" y="22" width="8" height="4" fill="#4bd5d9" fill-opacity=".72"/><rect x="45" y="50" width="7" height="4" fill="#8e5fbd" fill-opacity=".62"/></pattern>
+<pattern id="nodes" width="180" height="150" patternUnits="userSpaceOnUse"><circle cx="32" cy="46" r="5" fill="#4bd5d9" fill-opacity=".55" filter="url(#g)"/><circle cx="128" cy="102" r="4" fill="#568be0" fill-opacity=".5" filter="url(#g)"/></pattern>
+</defs>
+<rect width="2400" height="1350" fill="url(#s)"/>
+<g fill="#111a32"><rect x="0" y="510" width="120" height="390"/><rect x="155" y="650" width="105" height="250"/><rect x="290" y="470" width="150" height="430"/><rect x="475" y="560" width="115" height="340"/><rect x="625" y="430" width="130" height="470"/><rect x="800" y="610" width="110" height="290"/><rect x="945" y="500" width="155" height="400"/><rect x="1140" y="650" width="120" height="250"/><rect x="1300" y="520" width="115" height="380"/><rect x="1460" y="450" width="130" height="450"/><rect x="1630" y="590" width="120" height="310"/><rect x="1785" y="485" width="140" height="415"/><rect x="1970" y="620" width="110" height="280"/><rect x="2115" y="510" width="120" height="390"/><rect x="2270" y="585" width="130" height="315"/></g>
+<rect width="2400" height="900" fill="url(#windows)" opacity=".92"/>
+<path d="M0 930L2400 850V1360H0Z" fill="#202b42"/><path d="M0 1030L2400 970V1095L0 1160Z" fill="#3b465b"/>
+<path d="M0 750L700 720V1120L0 1160Z" fill="#060914" fill-opacity=".9"/>
+<path d="M100 840L2300 760" stroke="#7a8598" stroke-opacity=".65" stroke-width="20"/><path d="M100 870L2300 790" stroke="#151c2e" stroke-width="9"/>
+<path d="M450 720L1120 690 1290 780 520 815Z" fill="#424d62"/><path d="M1430 680L2100 650 2250 760 1510 795Z" fill="#303c55"/>
+<rect x="80" y="460" width="2260" height="690" fill="url(#nodes)" opacity=".9"/>
+<g color="#111827"><use href="#p" transform="translate(820 1110) scale(1.08)"/><use href="#p" transform="translate(1000 1112) scale(.9)"/><use href="#p" transform="translate(1320 1080) scale(.9)"/><use href="#p" transform="translate(1600 1048) scale(.9)"/><use href="#p" transform="translate(1900 1025) scale(.9)"/></g>
+<g color="#273546"><use href="#p" transform="translate(900 1108) scale(.95)"/><use href="#p" transform="translate(1120 1098) scale(1.08)"/><use href="#p" transform="translate(1420 1072) scale(1.02)"/><use href="#p" transform="translate(1730 1030) scale(.95)"/></g>
+<g fill="#6cd0d7" fill-opacity=".72"><rect x="895" y="1066" width="10" height="4"/><rect x="1115" y="1050" width="11" height="4"/><rect x="1415" y="1027" width="10" height="4"/><rect x="1725" y="988" width="10" height="4"/></g>
+<rect x="530" y="1085" width="170" height="40" fill="#34475a"/><path d="M570 1085L600 1010" stroke="#8894a3" stroke-width="6"/><use href="#p" transform="translate(610 1082) scale(.8)" color="#141d26"/>
+<path d="M80 235C430 180 690 280 1010 220S1630 270 1980 215S2240 205 2380 235" fill="none" stroke="#765084" stroke-opacity=".22" stroke-width="55" filter="url(#g)"/>
+<rect width="2400" height="1350" fill="url(#v)"/><rect width="2400" height="1350" filter="url(#n)" opacity=".35"/>
+</svg>

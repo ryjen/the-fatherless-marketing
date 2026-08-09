@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+<defs>
+<filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="22"/></filter>
+<filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="17"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .055"/></feComponentTransfer></filter>
+<radialGradient id="v"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset=".7" stop-color="#000" stop-opacity=".04"/><stop offset="1" stop-color="#000" stop-opacity=".52"/></radialGradient>
+<g id="p" fill="currentColor"><circle cy="-55" r="9"/><path d="M-11-43H11L7-10H-7Z M-7-32L-19-12l5 3 11-16ZM7-32l11 18-4 4L3-25ZM-5-10-9 0h6l3-10ZM5-10 9 0H3L0-10Z"/></g>
+</defs>
+<defs>
+<linearGradient id="s" y2="1"><stop stop-color="#070d14"/><stop offset="1" stop-color="#1b2329"/></linearGradient>
+<linearGradient id="stone" x2="1"><stop stop-color="#666b69"/><stop offset=".52" stop-color="#a0a29d"/><stop offset="1" stop-color="#505655"/></linearGradient>
+<pattern id="crowd" width="72" height="76" patternUnits="userSpaceOnUse"><g transform="translate(36 69) scale(.62)" color="#151a1d"><use href="#p"/></g></pattern>
+</defs>
+<rect width="2400" height="1350" fill="url(#s)"/>
+<rect x="265" y="300" width="1890" height="730" fill="#4b504f"/>
+<path d="M535 1005V650a160 160 0 01320 0v355ZM1120 1005V650a160 160 0 01320 0v355ZM1705 1005V650a160 160 0 01320 0v355Z" fill="#091014"/>
+<g fill="url(#stone)"><rect x="395" y="300" width="100" height="715"/><rect x="685" y="300" width="100" height="715"/><rect x="975" y="300" width="100" height="715"/><rect x="1265" y="300" width="100" height="715"/><rect x="1555" y="300" width="100" height="715"/><rect x="1845" y="300" width="100" height="715"/></g>
+<g fill="#9a9c97"><rect x="370" y="275" width="150" height="58"/><rect x="660" y="275" width="150" height="58"/><rect x="950" y="275" width="150" height="58"/><rect x="1240" y="275" width="150" height="58"/><rect x="1530" y="275" width="150" height="58"/><rect x="1820" y="275" width="150" height="58"/></g>
+<rect x="230" y="225" width="1960" height="100" fill="#777a76"/><rect x="175" y="170" width="2070" height="65" fill="#555b5a"/>
+<path d="M315 360h95l-15 300-32-35-33 35z" fill="#31514f" fill-opacity=".75"/><path d="M2010 360h95l-15 300-32-35-33 35z" fill="#6c3540" fill-opacity=".7"/>
+<path d="M250 1025H2190L2310 1070H140ZM220 1072H2220L2350 1120H95ZM185 1120H2250L2390 1170H55ZM145 1170H2290L2430 1225H15ZM105 1225H2330L2470 1285H-25Z" fill="#626765"/>
+<path d="M320 960H2075V1215H320Z" fill="url(#crowd)" opacity=".94"/>
+<use href="#p" transform="translate(300 1148) scale(1.2)" color="#111619"/><use href="#p" transform="translate(355 1150) scale(.86)" color="#1e2325"/>
+<path d="M0 0H760L1290 1350H0Z" fill="#000" fill-opacity=".2"/>
+<rect width="2400" height="1350" fill="url(#v)"/><rect width="2400" height="1350" filter="url(#n)" opacity=".35"/>
+</svg>
