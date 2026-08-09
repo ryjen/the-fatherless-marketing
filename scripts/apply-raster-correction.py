@@ -28,8 +28,7 @@ def materialize() -> None:
         parts = sorted(STAGING.glob(pattern))
         if not parts:
             raise SystemExit(f"missing raster seed parts for {name}: {pattern}")
-        encoded = "".join(part.read_text().strip() for part in parts)
-        data = base64.b64decode(encoded, validate=True)
+        data = b"".join(base64.b64decode(part.read_text().strip(), validate=True) for part in parts)
         if not (data.startswith(b"RIFF") and data[8:12] == b"WEBP"):
             raise SystemExit(f"decoded asset is not WebP: {name}")
         if b"EXIF" in data or b"XMP " in data:
