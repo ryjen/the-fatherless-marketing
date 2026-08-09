@@ -110,27 +110,49 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
-      - name: Resolve verification URL
-        id: verification
+      - name: Verify Pages deployment without custom domain
+        if: steps.pages-state.outputs.custom_domain == ''
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: sh scripts/verify-origin.sh "$SITE_URL"
+      - name: Resolve custom-domain verification URL
+        if: steps.pages-state.outputs.custom_domain != ''
+        id: custom-domain
         env:
           CUSTOM_DOMAIN: ${{ steps.pages-state.outputs.custom_domain }}
-          DEPLOYMENT_URL: ${{ steps.deployment.outputs.page_url }}
         shell: bash
         run: |
           set -euo pipefail
-          if [ -n "$CUSTOM_DOMAIN" ]; then
-            site_url="https://${CUSTOM_DOMAIN}/"
-          else
-            site_url="$DEPLOYMENT_URL"
-          fi
+          site_url="https://${CUSTOM_DOMAIN}/"
           echo "site_url=${site_url}" >> "$GITHUB_OUTPUT"
-          echo "Verifying deployed site at ${site_url}"
-      - name: Verify deployed site
-        env:
-          SITE_URL: ${{ steps.verification.outputs.site_url }}
-        run: sh scripts/verify-origin.sh "$SITE_URL"
-      - name: Verify Cloudflare edge
+          echo "Custom-domain diagnostic target: ${site_url}"
+      - name: Probe Cloudflare custom-domain edge
         if: steps.pages-state.outputs.custom_domain != ''
+        id: edge-probe
+        continue-on-error: true
         env:
-          SITE_URL: ${{ steps.verification.outputs.site_url }}
-        run: sh scripts/verify-cloudflare.sh "$SITE_URL"
+          SITE_URL: ${{ steps.custom-domain.outputs.site_url }}
+        run: |
+          sh scripts/verify-origin.sh "$SITE_URL"
+          sh scripts/verify-cloudflare.sh "$SITE_URL"
+      - name: Record Cloudflare probe result
+        if: steps.pages-state.outputs.custom_domain != '' && always()
+        env:
+          EDGE_OUTCOME: ${{ steps.edge-probe.outcome }}
+          SITE_URL: ${{ steps.custom-domain.outputs.site_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$EDGE_OUTCOME" = "success" ]; then
+            echo "Cloudflare custom-domain probe passed: ${SITE_URL}" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::GitHub-hosted runner could not verify the Cloudflare edge. Pages deployment succeeded; Cloudflare may intentionally deny datacenter automation. Validate the public hostname in a normal browser and Cloudflare Security events before treating this as an outage."
+            {
+              echo '### Cloudflare edge diagnostic'
+              echo
+              echo "- Target: \`${SITE_URL}\`"
+              echo "- GitHub-runner probe: **${EDGE_OUTCOME}**"
+              echo '- Pages deployment: **success**'
+              echo '- This edge probe is diagnostic because Cloudflare policy can intentionally block GitHub-hosted datacenter traffic.'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi

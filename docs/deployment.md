@@ -26,11 +26,13 @@ Before a custom domain is attached, the expected project origin is:
 
 Do not change DNS merely because Pages reports a successful legacy build. The direct Pages origin must be produced from the validated Actions artifact and pass live verification first.
 
-## Direct-origin verification
+## Deployment verification
 
-The deployment workflow automatically verifies the deployed site after every successful Pages publication. With no custom domain it uses the Pages deployment URL. When a custom domain is configured, it deliberately verifies `https://<custom-domain>/` instead of trusting a temporarily stale `http://` deployment URL returned while GitHub is converging certificate metadata.
+GitHub Pages publication is a hard deployment gate. The workflow requires `build_type: workflow`, publishes only the validated artifact, and fails if the Pages deployment itself fails.
 
-The verifier requires HTTPS and checks the home, Books, Characters, World, News, and About routes plus the shared versioned stylesheet and public-site identity marker.
+With no custom domain, the workflow also hard-verifies the Pages deployment URL. With a custom domain behind Cloudflare, the workflow probes `https://<custom-domain>/` after deployment, but that probe is diagnostic rather than a publication gate. Cloudflare security policy can intentionally reject GitHub-hosted datacenter traffic even when the public site is healthy in a normal browser.
+
+The verifiers check HTTPS, representative routes, the public-site identity marker, canonical-host retention, HTTP-to-HTTPS behavior, Cloudflare presence, and the current versioned stylesheet when the edge permits automated access.
 
 For a manual project-origin check:
 
@@ -45,14 +47,14 @@ sh scripts/verify-origin.sh https://fatherless.ryanjennin.gs/
 sh scripts/verify-cloudflare.sh https://fatherless.ryanjennin.gs/
 ```
 
-Record the exact deployed `main` revision and successful workflow run before treating a cutover as complete.
+If Cloudflare returns 403 specifically to a GitHub-hosted runner while a normal browser succeeds, do not add a broad WAF bypass merely to make CI green. Record the GitHub-runner denial as an edge-security diagnostic, verify the public hostname in a normal browser, and review the corresponding Cloudflare Security event if deeper attribution is needed.
 
 ## Preconditions for custom-domain cutover
 
 - public-content governance and anti-leak controls are in place;
 - the intended public artifact passes build and validation from a fresh checkout;
 - GitHub Pages reports `build_type: workflow`, not `legacy`;
-- the direct Pages origin has passed live verification;
+- the direct Pages project origin was verified before custom-domain attachment;
 - creative assets have explicit public rights/provenance records;
 - no private repository, token, deploy key, or cross-repository dependency is required;
 - the intended custom-domain behavior is recorded before DNS changes;
@@ -62,14 +64,15 @@ Record the exact deployed `main` revision and successful workflow run before tre
 ## Custom-domain cutover sequence
 
 1. Record the existing custom-domain, DNS/Cloudflare, redirect, TLS, and cache state.
-2. Verify the GitHub Pages project origin again and record its successful workflow run.
+2. Verify the GitHub Pages project origin and record its successful workflow run before attaching the custom domain.
 3. Configure the intended custom domain in GitHub Pages.
 4. Apply only the DNS records required for the chosen custom-domain behavior.
-5. Verify the custom domain over HTTPS before retiring previous routing.
-6. Verify HTTP redirects to HTTPS, representative routes, and the current versioned stylesheet through the Cloudflare edge.
-7. Confirm versioned styles/assets are current through the DNS/CDN path rather than only at the Pages origin.
-8. Keep the previous origin recoverable until the final domain checks pass.
-9. Retire superseded public deployment/routing only after the replacement is verified.
+5. Verify the custom domain over HTTPS in a normal browser before retiring previous routing.
+6. Verify representative routes and the current versioned stylesheet through the Cloudflare edge.
+7. Confirm HTTP requests are redirected to the canonical HTTPS host in Cloudflare configuration or an allowed edge probe.
+8. Confirm versioned styles/assets are current through the DNS/CDN path rather than only at the Pages origin.
+9. Keep the previous origin recoverable until the final domain checks pass.
+10. Retire superseded public deployment/routing only after the replacement is verified.
 
 ## Cloudflare edge contract
 
@@ -84,7 +87,7 @@ For `fatherless.ryanjennin.gs`:
 - HTML may be dynamic or cached according to Cloudflare policy, but versioned stylesheet content must match the deployed build;
 - avoid unversioned long-lived CSS caching, which can recreate the historical stale-style/readability failure mode.
 
-`scripts/verify-cloudflare.sh` is the production edge gate. It verifies:
+`scripts/verify-cloudflare.sh` is an edge diagnostic. When Cloudflare permits the GitHub-hosted runner, it verifies:
 
 - the HTTPS custom domain returns the current public-site marker;
 - a `cf-ray` header proves the request traversed Cloudflare;
@@ -92,7 +95,9 @@ For `fatherless.ryanjennin.gs`:
 - `styles/base.v1.css` contains the current expected visual token;
 - Cloudflare cache status for the home page and stylesheet is printed into the deployment log for diagnosis.
 
-GitHub's Pages API may temporarily report `https_enforced: false` or an `http://` custom-domain URL while the public Cloudflare HTTPS edge already works. The production acceptance test is therefore the explicit HTTPS custom-domain probe plus the Cloudflare edge check. GitHub's own **Enforce HTTPS** setting should still be enabled when available so the origin path is also HTTPS-only.
+A diagnostic failure does not undo a successful GitHub Pages deployment. The workflow records it as a warning because a WAF/bot policy that blocks cloud-datacenter automation can be intentional. A public-browser failure, stale content, a Pages deployment failure, or a confirmed Cloudflare routing/TLS misconfiguration remains a real cutover failure.
+
+GitHub's Pages API may temporarily report `https_enforced: false` or an `http://` custom-domain URL while the public Cloudflare HTTPS edge already works. GitHub's own **Enforce HTTPS** setting should still be enabled when available so the origin path is also HTTPS-only.
 
 ## Rollback
 
