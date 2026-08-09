@@ -13,7 +13,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/",
-      "checksum_sha256": "b8846ea7ac57c14145dc16d8d24b36fccefd7def905fa335225489d29fb37dab",
+      "checksum_sha256": "472d70610b50a5a2bca9dcedff13edbf954b9be9fcb72bfac852683eb272ecd4",
       "replacement_status": "current"
     },
     {
@@ -43,7 +43,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/the-fatherless/",
-      "checksum_sha256": "d169b1399f10af5a1ca9c8d7a4e7fc125e3b20d8e83e26b68d14ef8d86b43676",
+      "checksum_sha256": "8b138799f7c5cd6617b3a0d076365b7272b0027fb38e6ad94cef4f8ae59ecb51",
       "replacement_status": "current"
     },
     {
@@ -58,7 +58,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/prequel/",
-      "checksum_sha256": "4a02c8f2d061482493b605955569df0d189daf70cfa8f09f7cb06251793e9f3a",
+      "checksum_sha256": "b38a90cdde6681966aaf4ce98555be2ce6785d1680df60bc8a5a5c998e7552bc",
       "replacement_status": "current"
     },
     {
@@ -73,7 +73,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/sequel/",
-      "checksum_sha256": "6d9a39ddf138f3dab506134e5a268e14bb1126fba95f241b418a0e13bd8bc502",
+      "checksum_sha256": "2476342b4bb9e59cff988e4122419769e85445528a7dd8c5454a8fe428b81bb4",
       "replacement_status": "current"
     },
     {
@@ -210,6 +210,97 @@
       "canonical_url": "/styles/sequel.v2.css",
       "checksum_sha256": null,
       "replacement_status": "current"
+    },
+    {
+      "id": "style-hero-media-v1",
+      "path": "src/styles/hero-media.v1.css",
+      "title": "Hero illustration presentation v1",
+      "summary": "Shared responsive positioning, overlays, accessibility behavior, and crop rules for trilogy hero illustrations.",
+      "content_type": "site-asset",
+      "spoiler_tier": "placeholder",
+      "approval_state": "approved",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/styles/hero-media.v1.css",
+      "checksum_sha256": "2966ee115f07f1644f8b8e514188b67876b327c158b1828a051aa5e1c49ee351",
+      "replacement_status": "current"
+    },
+    {
+      "id": "hero-trilogy-overview",
+      "path": "src/media/heroes/trilogy-overview-hero.svg",
+      "title": "Trilogy overview hero",
+      "summary": "Public-native vector illustration transitioning from glacial migration through civic authority to distributed future infrastructure.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "all-rights-reserved-project-artwork",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/media/heroes/trilogy-overview-hero.svg",
+      "checksum_sha256": "909637aa2be6fc7d435e6e2636546c036ebcbbca1a02e3b1049c4590ff4eb65f",
+      "replacement_status": "current",
+      "creator_class": "generated",
+      "rights_basis": "Project-generated original artwork approved for this public marketing release; no third-party source asset incorporated.",
+      "attribution_required": false,
+      "metadata_review": "stripped"
+    },
+    {
+      "id": "hero-age-of-embers",
+      "path": "src/media/heroes/age-of-embers-hero.svg",
+      "title": "Age of Embers hero",
+      "summary": "Public-native vector illustration of a glacial migration beneath a low sun and red sky-fire.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "all-rights-reserved-project-artwork",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/media/heroes/age-of-embers-hero.svg",
+      "checksum_sha256": "9af704a9b7d035e1a639c5a1410f82596d1e322fdb4f96a46d59203efe0fb09e",
+      "replacement_status": "current",
+      "creator_class": "generated",
+      "rights_basis": "Project-generated original artwork approved for this public marketing release; no third-party source asset incorporated.",
+      "attribution_required": false,
+      "metadata_review": "stripped"
+    },
+    {
+      "id": "hero-original",
+      "path": "src/media/heroes/fatherless-original-hero.svg",
+      "title": "The Fatherless original hero",
+      "summary": "Public-native vector illustration emphasizing monumental civic authority and human vulnerability.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "all-rights-reserved-project-artwork",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/media/heroes/fatherless-original-hero.svg",
+      "checksum_sha256": "7208cde8e07c4ac70312f6cadc321f2410d6bcef4f60112595abaaa050ecdf74",
+      "replacement_status": "current",
+      "creator_class": "generated",
+      "rights_basis": "Project-generated original artwork approved for this public marketing release; no third-party source asset incorporated.",
+      "attribution_required": false,
+      "metadata_review": "stripped"
+    },
+    {
+      "id": "hero-neurion",
+      "path": "src/media/heroes/neurion-hero.svg",
+      "title": "Neurion hero",
+      "summary": "Public-native vector illustration of a partially dark civic future with distributed signals and plural human/synthetic agency.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "all-rights-reserved-project-artwork",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/media/heroes/neurion-hero.svg",
+      "checksum_sha256": "d4c963f4bcb62705ce418b4b1854c17822ea8743c7dba73390c876d221df04f0",
+      "replacement_status": "current",
+      "creator_class": "generated",
+      "rights_basis": "Project-generated original artwork approved for this public marketing release; no third-party source asset incorporated.",
+      "attribution_required": false,
+      "metadata_review": "stripped"
     }
   ]
 }
