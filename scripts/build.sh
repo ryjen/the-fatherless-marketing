@@ -6,3 +6,4 @@ cd "$root"
 
 python3 scripts/content_model.py
 python3 scripts/publication.py build
+node scripts/build-responsive-media.mjs
