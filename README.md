@@ -17,9 +17,12 @@ The current landing-page composition target is preserved in [`docs/site-concept-
 
 ## Development
 
-The site is static HTML/CSS with a manifest-authoritative publication boundary. Python performs source/build validation; Node dependencies are development-only tooling for responsive-media generation and Chromium smoke tests.
+The site is static HTML/CSS with a manifest-authoritative publication boundary. Python performs source/build validation; pinned Node development dependencies generate the checksum-governed responsive hero media and run Chromium smoke tests.
+
+Install the development dependencies before building so the responsive AVIF/WebP matrix can be reproduced:
 
 ```sh
+npm install --no-package-lock --no-audit --no-fund
 sh scripts/build.sh
 sh scripts/validate.sh
 ```
@@ -27,13 +30,12 @@ sh scripts/validate.sh
 For the complete visual validation suite:
 
 ```sh
-npm install --no-package-lock --no-audit --no-fund
 node tests/test-responsive-media.mjs
 npx playwright install chromium
 # serve dist/ and run tests/browser-smoke.spec.js with SITE_BASE_URL set to the served base path
 ```
 
-Generated output is written to `dist/` and must be reproducible from committed public source files. See `docs/visual-system.md` for visual, accessibility, media, cache, and performance conventions.
+Generated output is written to `dist/` and must be reproducible from committed public source files and approved staged media masters. See `docs/visual-system.md` for visual, accessibility, media, cache, and performance conventions.
 
 ## Deployment
 
