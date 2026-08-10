@@ -13,7 +13,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/",
-      "checksum_sha256": "ad0edff332834627eacbf0e8c3035d6beb0146648b8fd24c35b44593ade027c7",
+      "checksum_sha256": "68adf39080f82689c0041bc55a270e20ee127f0d2c746707914a05dffd9b8f6a",
       "replacement_status": "current"
     },
     {
@@ -178,6 +178,21 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/styles/home.v2.css",
+      "checksum_sha256": null,
+      "replacement_status": "current"
+    },
+    {
+      "id": "style-arcs-v1",
+      "path": "src/styles/arcs.v1.css",
+      "title": "Trilogy thematic arcs v1",
+      "summary": "Responsive homepage presentation for premise-level thematic arcs shared across the trilogy.",
+      "content_type": "site-asset",
+      "spoiler_tier": "placeholder",
+      "approval_state": "placeholder",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/styles/arcs.v1.css",
       "checksum_sha256": null,
       "replacement_status": "current"
     },
