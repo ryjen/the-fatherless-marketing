@@ -1,13 +1,9 @@
-/* Spoiler-safe thematic arc presentation for the trilogy homepage. */
-
 .trilogy-arcs {
   width: min(82rem, calc(100% - 2rem));
   margin: clamp(5rem, 9vw, 8rem) auto;
   padding: clamp(2rem, 5vw, 4.5rem);
   border: 1px solid rgb(118 168 160 / 0.32);
-  background:
-    radial-gradient(circle at 50% 0%, rgb(118 168 160 / 0.09), transparent 28rem),
-    linear-gradient(145deg, #0b1118, #070b10);
+  background: radial-gradient(circle at 50% 0%, rgb(118 168 160 / 0.09), transparent 28rem), linear-gradient(145deg, #0b1118, #070b10);
 }
 
 .trilogy-arcs__intro {
@@ -27,7 +23,6 @@
   font-size: clamp(2.3rem, 5vw, 4.4rem);
   font-weight: 680;
   letter-spacing: -0.04em;
-  text-wrap: balance;
 }
 
 .trilogy-arcs__intro > p:not(.eyebrow) {
@@ -35,22 +30,20 @@
   margin: 1.1rem auto 0;
   color: #c7d0d1;
   font: 1rem/1.7 var(--font-sans);
-  text-wrap: balance;
 }
 
 .trilogy-arcs__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: clamp(2rem, 5vw, 4rem);
-  border-top: 1px solid rgb(112 132 142 / 0.3);
-  border-left: 1px solid rgb(112 132 142 / 0.3);
+  border: solid rgb(112 132 142 / 0.3);
+  border-width: 1px 0 0 1px;
 }
 
 .trilogy-arc {
-  min-width: 0;
   padding: clamp(1.4rem, 3vw, 2.4rem);
-  border-right: 1px solid rgb(112 132 142 / 0.3);
-  border-bottom: 1px solid rgb(112 132 142 / 0.3);
+  border: solid rgb(112 132 142 / 0.3);
+  border-width: 0 1px 1px 0;
 }
 
 .trilogy-arc__number {
@@ -67,7 +60,6 @@
   color: #eef2f1;
   font-size: clamp(1.25rem, 2vw, 1.7rem);
   font-weight: 660;
-  letter-spacing: -0.025em;
 }
 
 .trilogy-arc p {
@@ -77,24 +69,10 @@
 }
 
 @media (max-width: 64rem) {
-  .trilogy-arcs__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .trilogy-arcs__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 42rem) {
-  .trilogy-arcs {
-    width: min(100% - 1rem, 82rem);
-    padding: 1.5rem;
-  }
-
-  .trilogy-arcs__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .trilogy-arc {
-    scroll-behavior: auto;
-  }
+  .trilogy-arcs { width: min(100% - 1rem, 82rem); padding: 1.5rem; }
+  .trilogy-arcs__grid { grid-template-columns: 1fr; }
 }
