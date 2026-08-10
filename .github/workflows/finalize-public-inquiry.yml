@@ -1,0 +1,59 @@
+name: Finalize public inquiry route
+
+on:
+  push:
+    branches:
+      - feature/public-inquiry-route
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: feature/public-inquiry-route
+          persist-credentials: true
+
+      - name: Refresh exact press checksum
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          manifest_path = root / 'public-manifest.json'
+          manifest = json.loads(manifest_path.read_text())
+          press = root / 'src/press/index.html'
+          digest = hashlib.sha256(press.read_bytes()).hexdigest()
+
+          for artifact in manifest['artifacts']:
+              if artifact['id'] == 'press-industry':
+                  artifact['checksum_sha256'] = digest
+                  break
+          else:
+              raise SystemExit('press-industry manifest entry not found')
+
+          manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
+          PY
+
+      - name: Validate publication boundary and build
+        run: |
+          python3 scripts/content_model.py
+          sh scripts/build.sh
+          sh scripts/validate.sh
+
+      - name: Commit final tree and remove helper
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/finalize-public-inquiry.yml
+          git add public-manifest.json
+          git commit -m 'Finalize public inquiry route metadata'
+          git push
