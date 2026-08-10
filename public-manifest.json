@@ -13,7 +13,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/",
-      "checksum_sha256": "579c0e429f4f4e53bb1316169043432eafeb63494987d2bae436479fc91105c0",
+      "checksum_sha256": "ca9da44602e8a857e44efa2954a3509bcb8085928fc1890416bcec569cd8415c",
       "replacement_status": "current"
     },
     {
@@ -28,7 +28,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/",
-      "checksum_sha256": "c9de2dc2bb3ee2ae7d10dd3a2ac9b6be06a562a95ea30b19b37dacf8255c0e85",
+      "checksum_sha256": "32f444f979ebc2f81e66953d013a18eb9137ddf61ab7745441148f9de1c1d819",
       "replacement_status": "current"
     },
     {
@@ -43,7 +43,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/the-fatherless/",
-      "checksum_sha256": "0fc3227015bfd5527c9da47f787cb3a4e78ef6ece0064feb55a2c905ac04e72c",
+      "checksum_sha256": "9952b4087fceebce31643b20733acc2af403c09e84e3bed78a8d08ed4ad50648",
       "replacement_status": "current"
     },
     {
@@ -58,7 +58,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/prequel/",
-      "checksum_sha256": "202b7468d8aa4574c49a9da491318c4663d25150d2aa2e38b0e32094bf490648",
+      "checksum_sha256": "a7d5381944637d678652967a12fa8b26c5c1ec39d524938dc95d1ff8ac8883db",
       "replacement_status": "current"
     },
     {
@@ -73,7 +73,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/sequel/",
-      "checksum_sha256": "71db0d302733061d4bde2a0e670d9c8a1ae93719719bb0d49d2b191246fc9eab",
+      "checksum_sha256": "683cdb5fc1c93460bafde94eb1cd30dea59475bc6a27e1bd02fb987fb08162f8",
       "replacement_status": "current"
     },
     {
@@ -95,15 +95,15 @@
       "id": "site-placeholder-world",
       "path": "src/world/index.html",
       "title": "World",
-      "summary": "Public world index placeholder.",
+      "summary": "Public spoiler-safe overview of the trilogy's three ages, settings, and premise-level social pressures.",
       "content_type": "page",
-      "spoiler_tier": "placeholder",
-      "approval_state": "placeholder",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
       "rights_status": "repository-authored",
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/world/",
-      "checksum_sha256": null,
+      "checksum_sha256": "b241f4e6a68960c2b78fad5d8f78d39d669cc0ef848b747c13e6f45fa8772b0b",
       "replacement_status": "current"
     },
     {
@@ -385,7 +385,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/sitemap.xml",
-      "checksum_sha256": "03248c8e6f1aec6573a0f6d9aa92bc4c0c260a4bdef48eb12cb4c326b3ad3f39",
+      "checksum_sha256": "32a138662db2377d8cd796078339146f222ff44dda5dba60a3008255212aff76",
       "replacement_status": "current"
     }
   ]
