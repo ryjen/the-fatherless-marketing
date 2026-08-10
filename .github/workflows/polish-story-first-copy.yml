@@ -1,0 +1,71 @@
+name: Polish story-first public copy
+
+on:
+  push:
+    branches: [feature/story-first-public-hook]
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: feature/story-first-public-hook
+          fetch-depth: 0
+      - name: Tighten opening copy and refresh checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib, json
+
+          edits = {
+            'src/index.html': [
+              ('He needed his victims to deserve their chains. So he manufactured the proof.',
+               'A powerful man needed his victims to deserve their chains. So he manufactured the proof.'),
+            ],
+            'src/books/index.html': [
+              ('Three ages. Three reasons power says control is necessary.',
+               'Three ages. Three excuses for control.'),
+            ],
+          }
+          for path, replacements in edits.items():
+              p = Path(path)
+              text = p.read_text()
+              for old, new in replacements:
+                  if old not in text:
+                      raise SystemExit(f'missing expected text in {path}: {old!r}')
+                  text = text.replace(old, new)
+              p.write_text(text)
+
+          manifest_path = Path('public-manifest.json')
+          data = json.loads(manifest_path.read_text())
+          changed = set(edits)
+          seen = set()
+          for artifact in data['artifacts']:
+              path = artifact.get('path')
+              if path in changed:
+                  artifact['checksum_sha256'] = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                  seen.add(path)
+          if seen != changed:
+              raise SystemExit(f'manifest mismatch: expected {changed}, saw {seen}')
+          manifest_path.write_text(json.dumps(data, indent=2) + '\n')
+          PY
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+          sh scripts/build.sh
+          sh scripts/validate.sh
+      - name: Commit final tree and remove helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/polish-story-first-copy.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/index.html src/books/index.html public-manifest.json .github/workflows/polish-story-first-copy.yml
+          git commit -m 'Polish the public story hook'
+          git push origin HEAD:feature/story-first-public-hook
