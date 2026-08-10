@@ -72,7 +72,28 @@ The three books must be distinct but coherent in public presentation:
 - **The Fatherless:** present the approved core premise, public setting/context, and reader-facing conflict. Do not expose endings, hidden thematic machinery, or private canon notes.
 - **Sequel:** introduce only approved future context and initiating premise. Do not reveal cross-book resolutions, hidden correspondences, or private system architecture.
 
-Cross-book links may say that the works form a trilogy and may identify chronological order. Any stronger thematic or causal claim requires an explicitly approved public artifact.
+Cross-book links may say that the works form a trilogy and may identify chronological order. Shared thematic arcs may be presented only as explicitly approved public questions or premise-level tensions under the thematic-arc contract below. Causal explanations, hidden correspondences, or resolutions remain private.
+
+## Public thematic arcs
+
+The public site may expose recurring thematic arcs when doing so helps readers understand what the trilogy examines without explaining how the stories work.
+
+Approved arc presentation should stay at the level of:
+
+- recurring moral or philosophical questions;
+- premise-level tensions shared across multiple books;
+- broad motifs already approved for public use;
+- reader-facing language that invites interpretation rather than supplies an answer.
+
+Public arc copy must not expose:
+
+- event causality or the mechanism behind recurring events;
+- hidden symbolic, theological, astrological, historical, or character correspondences;
+- private character trajectories or relationships;
+- later-book resolutions, reversals, reveals, or ending logic;
+- internal narrative architecture, source paths, private issue references, or editorial rationale.
+
+A useful rule is **publish the question, keep the answer and machinery private**. Arc copy belongs at `premise` spoiler tier unless a more permissive artifact has been explicitly approved.
 
 ## Great Ages
 

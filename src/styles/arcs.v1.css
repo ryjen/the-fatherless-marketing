@@ -1,0 +1,4 @@
+.trilogy-arcs__intro>p:last-child{max-width:44rem;margin:1rem auto 0}
+.trilogy-arcs__grid article:nth-child(n+4){border-top:1px solid rgb(112 132 142/.3)}
+.trilogy-arcs__grid article:nth-child(4){border-left:0}
+@media print{.trilogy-arcs__intro>p:last-child{margin-inline:0;color:#000}}
