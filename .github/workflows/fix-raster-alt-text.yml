@@ -1,0 +1,87 @@
+name: Fix raster hero alt text
+
+on:
+  push:
+    branches:
+      - fix/raster-hero-alt-text
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: fix/raster-hero-alt-text
+          persist-credentials: true
+
+      - name: Align visible-scene descriptions and refresh checksums
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          prequel = 'A line of people crosses a dark glacial plain beneath jagged mountains and a red streak in a stormy sky.'
+          original = 'A crowd gathers before monumental civic arches beneath a shaft of cold light.'
+          sequel = 'A crowd moves through a broad civic plaza beneath a dark blue skyline of scattered lights and storm clouds.'
+
+          replacements = {
+              Path('src/index.html'): [
+                  ('A small migrating group crosses a glacial valley beneath a low sun and red aurora, carrying a protected ember through the cold.', prequel, 1),
+                  ("People gather beneath massive civic architecture while a small vulnerable group stands at the edge of the Republic's ordered public space.", original, 2),
+                  ('Humans and synthetic persons face a dark networked city lit by many independent signals during an infrastructure disruption.', sequel, 1),
+              ],
+              Path('src/books/prequel/index.html'): [
+                  ('A small migrating group crosses a glacial valley beneath a low sun and red aurora, carrying a protected ember through the cold.', prequel, 1),
+              ],
+              Path('src/books/the-fatherless/index.html'): [
+                  ("People gather beneath massive civic architecture while a small vulnerable pair stands at the edge of the Republic's ordered public space.", original, 1),
+              ],
+              Path('src/books/sequel/index.html'): [
+                  ('Humans and synthetic persons move through a partially dark future civic district lit by many independent signals during an infrastructure disruption.', sequel, 1),
+              ],
+          }
+
+          for path, changes in replacements.items():
+              text = path.read_text()
+              for old, new, expected in changes:
+                  count = text.count(old)
+                  if count != expected:
+                      raise SystemExit(f'{path}: expected {expected} occurrence(s) of old alt text, found {count}')
+                  text = text.replace(old, new)
+              path.write_text(text)
+
+          manifest_path = Path('public-manifest.json')
+          manifest = json.loads(manifest_path.read_text())
+          changed = {str(path) for path in replacements}
+          refreshed = set()
+          for artifact in manifest['artifacts']:
+              path = artifact.get('path')
+              if path in changed:
+                  artifact['checksum_sha256'] = hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                  refreshed.add(path)
+          if refreshed != changed:
+              raise SystemExit(f'manifest mismatch: expected {sorted(changed)}, refreshed {sorted(refreshed)}')
+          manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
+          PY
+
+      - name: Validate publication boundary and build
+        run: |
+          python3 scripts/content_model.py
+          sh scripts/build.sh
+          sh scripts/validate.sh
+
+      - name: Commit final tree and remove helper
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/fix-raster-alt-text.yml
+          git add public-manifest.json src/index.html src/books/prequel/index.html src/books/the-fatherless/index.html src/books/sequel/index.html
+          git commit -m 'Align raster hero alt text with visible scenes'
+          git push
