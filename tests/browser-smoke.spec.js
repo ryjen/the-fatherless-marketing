@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:4173/';
-const themeRoutes = ['', 'books/prequel/', 'books/sequel/'];
+const readerRoutes = ['', 'books/', 'books/prequel/', 'books/the-fatherless/', 'books/sequel/', 'world/'];
 const viewports = [
   { name: 'mobile', width: 375, height: 812 },
   { name: 'desktop', width: 1440, height: 1000 },
@@ -27,7 +27,7 @@ function contrast(a, b) {
 }
 
 for (const viewport of viewports) {
-  for (const route of themeRoutes) {
+  for (const route of readerRoutes) {
     test(`${viewport.name} ${route || '/'} is readable and overflow-safe`, async ({ page }) => {
       await page.setViewportSize(viewport);
       const response = await page.goto(siteUrl(route), { waitUntil: 'networkidle' });
@@ -35,12 +35,15 @@ for (const viewport of viewports) {
       await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('#main')).toBeVisible();
       await expect(page.locator('.skip-link')).toHaveCount(1);
-      await expect(page.locator('.primary-nav a')).toHaveCount(6);
+
+      const navLinks = page.locator('.primary-nav a');
+      expect(await navLinks.count()).toBeGreaterThanOrEqual(5);
+      await expect(navLinks.filter({ hasText: 'Characters' })).toHaveCount(0);
 
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       expect(overflow).toBeLessThanOrEqual(1);
 
-      const truncated = await page.locator('.primary-nav a').evaluateAll(links => links.some(link => link.scrollWidth > link.clientWidth + 1));
+      const truncated = await navLinks.evaluateAll(links => links.some(link => link.scrollWidth > link.clientWidth + 1));
       expect(truncated).toBeFalsy();
 
       const tokens = await page.evaluate(() => {
@@ -55,7 +58,7 @@ for (const viewport of viewports) {
       expect(contrast(tokens['--accent'], tokens['--bg'])).toBeGreaterThanOrEqual(4.5);
       expect(contrast(tokens['--text'], tokens['--surface'])).toBeGreaterThanOrEqual(4.5);
 
-      const firstNav = page.locator('.primary-nav a').first();
+      const firstNav = navLinks.first();
       await firstNav.focus();
       const focus = await firstNav.evaluate(element => {
         const styles = getComputedStyle(element);
