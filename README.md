@@ -15,6 +15,8 @@ This repository contains only material intentionally approved for public release
 
 The current landing-page composition target is preserved in [`docs/site-concept-reference.md`](docs/site-concept-reference.md). It is a reference mockup rather than deployable content; the visual system, approved era palettes, public manifest, and content-governance rules remain authoritative.
 
+The shared visual contract is documented in [`docs/visual-system.md`](docs/visual-system.md). The original volume's current public-safe maintenance direction — **Institutional Eclipse** — is documented separately in [`docs/original-visual-direction.md`](docs/original-visual-direction.md), including palette, composition, anti-devotional guardrails, hero requirements, and the boundary that keeps canon-sensitive art rationale private.
+
 ## Development
 
 The site is static HTML/CSS with a manifest-authoritative publication boundary. Python performs source/build validation; Node dependencies are development-only tooling for responsive-media generation and Chromium smoke tests.
