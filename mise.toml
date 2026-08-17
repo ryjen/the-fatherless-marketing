@@ -2,8 +2,8 @@
 node = "24"
 
 [tasks.deps]
-description = "Install pinned Node dependencies"
-run = "npm ci --no-audit --no-fund"
+description = "Install exact top-level Node dependencies"
+run = "npm install --no-package-lock --no-audit --no-fund"
 
 [tasks.source]
 description = "Validate the public content model, manifest boundary, rights metadata, and production hero contract"
