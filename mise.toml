@@ -1,0 +1,41 @@
+[tools]
+node = "24"
+
+[tasks.deps]
+description = "Install pinned Node dependencies"
+run = "npm ci --no-audit --no-fund"
+
+[tasks.source]
+description = "Validate the public content model, manifest boundary, rights metadata, and production hero contract"
+depends = ["deps"]
+run = "node tools/site.mjs source"
+
+[tasks.contracts]
+description = "Run Node contract tests for publication and responsive media"
+depends = ["deps"]
+run = "node --test tests/contracts.test.mjs"
+
+[tasks.build]
+description = "Build dist from manifest-backed publishable source"
+depends = ["source"]
+run = "node tools/site.mjs build"
+
+[tasks.validate]
+description = "Validate the built artifact and performance budgets"
+depends = ["build"]
+run = "node tools/site.mjs validate"
+
+[tasks."browser:install"]
+description = "Install Chromium and its hosted-runner dependencies"
+depends = ["deps"]
+run = "npx playwright install --with-deps chromium"
+
+[tasks.browser]
+description = "Run browser smoke against the built public site"
+depends = ["validate", "browser:install"]
+run = "node tools/site.mjs browser"
+
+[tasks.check]
+description = "Run the complete public-site validation gate"
+depends = ["contracts", "browser"]
+run = "node --check tools/site.mjs"
