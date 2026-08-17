@@ -13,37 +13,41 @@ This repository contains only material intentionally approved for public release
 
 ## Design reference
 
-The current landing-page composition target is preserved in [`docs/site-concept-reference.md`](docs/site-concept-reference.md). It is a reference mockup rather than deployable content; the visual system, approved era palettes, public manifest, and content-governance rules remain authoritative.
-
-The shared visual contract is documented in [`docs/visual-system.md`](docs/visual-system.md). The original volume's current public-safe maintenance direction — **Institutional Eclipse** — is documented separately in [`docs/original-visual-direction.md`](docs/original-visual-direction.md), including palette, composition, anti-devotional guardrails, hero requirements, and the boundary that keeps canon-sensitive art rationale private.
+The landing-page composition target is preserved in [`docs/site-concept-reference.md`](docs/site-concept-reference.md). The shared visual contract is documented in [`docs/visual-system.md`](docs/visual-system.md). The original volume's public-safe **Institutional Eclipse** direction is documented in [`docs/original-visual-direction.md`](docs/original-visual-direction.md).
 
 ## Development
 
-The site is static HTML/CSS with a manifest-authoritative publication boundary. Python performs source/build validation; Node dependencies are development-only tooling for responsive-media generation and Chromium smoke tests.
+The site is static HTML/CSS with a manifest-authoritative publication boundary. **JavaScript is the only custom scripting language.**
+
+- **mise** is the local/CI task front door.
+- **Node 24** runs publication, build, performance, deployment-diagnostic, and contract logic.
+- **Sharp** owns responsive raster generation.
+- **Playwright** owns browser smoke tests.
+- `tools/site.mjs` is the single project-tool command surface.
+
+Run the complete local validation path:
 
 ```sh
-sh scripts/build.sh
-sh scripts/validate.sh
+mise run check
 ```
 
-For the complete visual validation suite:
+Useful narrower tasks:
 
 ```sh
-npm install --no-package-lock --no-audit --no-fund
-node tests/test-responsive-media.mjs
-npx playwright install chromium
-# serve dist/ and run tests/browser-smoke.spec.js with SITE_BASE_URL set to the served base path
+mise run source
+mise run contracts
+mise run build
+mise run validate
+mise run browser
 ```
 
-Generated output is written to `dist/` and must be reproducible from committed public source files. See `docs/visual-system.md` for visual, accessibility, media, cache, and performance conventions.
+Generated output is written to `dist/` and must be reproducible from committed public source files. See [`docs/visual-system.md`](docs/visual-system.md) for visual, accessibility, media, cache, and performance conventions.
 
 ## Deployment
 
 CI validates every pull request and push to `main`. Successful `main` runs upload the validated `dist/` artifact and deploy it through GitHub Pages using GitHub Actions as the only publishing source. The production custom domain is then probed through Cloudflare for origin identity, current assets, HTTPS, and edge behavior.
 
-The current production path has been verified end-to-end at `https://fatherless.ryanjennin.gs/`: publication checks, responsive-media validation, build validation, Chromium browser smoke, GitHub Pages deployment, and the Cloudflare edge probe have all completed successfully.
-
-Pages must remain configured as **Settings → Pages → Source: GitHub Actions**. Do not switch to branch publishing; that would bypass the validated `dist/` artifact. Cutover, verification, cache, and rollback procedures are documented in `docs/deployment.md`.
+Pages must remain configured as **Settings → Pages → Source: GitHub Actions**. Do not switch to branch publishing; that bypasses the validated `dist/` artifact. Cutover, verification, cache, and rollback procedures are documented in [`docs/deployment.md`](docs/deployment.md).
 
 ## Rights
 
