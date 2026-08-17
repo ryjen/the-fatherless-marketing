@@ -4,22 +4,27 @@ This repository is a public publication surface. Do not use it for drafting, can
 
 ## Publication boundary
 
-- Every file under `src/` is deployable and therefore must have exactly one entry in `public-manifest.json`.
+- Every file under `src/` is deployable and must have exactly one entry in `public-manifest.json`.
 - `src/` may contain only `placeholder`, `approved`, or `published` artifacts whose replacement status is `current`.
 - Candidate, withdrawn, and superseded material must not live under `src/`; use `staging/` when a public-repository staging record is appropriate.
 - The build is manifest-driven. Unmanifested files are rejected rather than copied to `dist/`.
 
 ## Before opening a pull request
 
-- Confirm every public artifact has an entry in `public-manifest.json`.
-- Confirm spoiler tier, approval state, rights status, public provenance class, and replacement status.
+- Confirm every public artifact has a manifest entry.
+- Confirm spoiler tier, approval state, rights status, provenance class, replacement status, and checksum where required.
 - For media, record creator class, rights basis, attribution requirement, and metadata-review state.
-- If attribution is required, include the exact public attribution text.
 - Strip embedded metadata, or explicitly mark it `reviewed-retained` and document why retention is safe and necessary.
-- Do not include private repository paths or identifiers, private issue or revision references, correspondence, credentials, or internal rationale.
+- Do not include private repository paths or identifiers, private issue/revision references, correspondence, credentials, or internal rationale.
 - Keep candidate, withdrawn, and superseded material outside `src/`.
-- Review unexpectedly large text additions as possible manuscript or draft leakage.
-- Run `python3 -m unittest discover -s tests -v` and `sh scripts/build.sh && sh scripts/validate.sh` before requesting review.
+- Review unexpectedly large text additions as possible manuscript/draft leakage.
+- Run the same entrypoint used by CI:
+
+```sh
+mise run check
+```
+
+JavaScript is the only custom scripting language. Generic runtime/task management belongs in `mise.toml`; publication/build/media/deployment-diagnostic project logic belongs in `tools/site.mjs`; browser behavior belongs in Playwright specs.
 
 ## Review expectations
 
