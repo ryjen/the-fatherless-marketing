@@ -91,7 +91,7 @@ Make the Republic itself visually powerful: civilization, law, wealth, hierarchy
 
 ### Composition
 
-A cold monumental civic threshold in a Rome-like republic at blue-hour or controlled overcast light. Massive stone stairs, columns, arches, bronze/iron details, banners or civic fabric without readable emblems, and a disciplined crowd create geometric authority. A small vulnerable family or pair is partially separated from the crowd at an edge/threshold—not centred, posed, or illuminated as sacred figures. Officials, guards, elites, workers, and enslaved people may share the public space through differing posture, access, or elevation rather than explicit spectacle.
+A cold monumental civic threshold in the Aurelian Republic at blue-hour or controlled overcast light. Massive stone stairs, columns, arches, bronze/iron details, banners or civic fabric without readable emblems, and a disciplined crowd create geometric authority. A small vulnerable family or pair is partially separated from the crowd at an edge/threshold—not centred, posed, or illuminated as sacred figures. Officials, guards, elites, workers, and enslaved people may share the public space through differing posture, access, or elevation rather than explicit spectacle.
 
 The camera should feel observational: slightly elevated or oblique, like witnessing an institution functioning. Human faces need not be identifiable enough to lock public character casting.
 
@@ -101,7 +101,7 @@ Graphite, cold limestone, blue-black shadow, desaturated fabric, oxidized teal m
 
 ### Avoid
 
-Jesus-like central male figure, halo/sunburst, mother-and-child devotional pose, crucifix silhouettes, candles/crowns/olive branches, gold wash, parchment texture, Roman tourist postcard, gladiator-poster action, triumphal emperor portrait, or generic Biblical-film composition.
+Jesus-like central male figure, halo/sunburst, mother-and-child devotional pose, crucifix silhouettes, candles/crowns/olive branches, gold wash, parchment texture, ancient-city tourist postcard, gladiator-poster action, triumphal ruler portrait, or generic Biblical-film composition.
 
 ### Public-safe alt intent
 
