@@ -20,7 +20,7 @@ function walk(dir) {
 const files = [
   ...walk(path.join(root, 'src')),
   ...walk(path.join(root, 'docs')),
-  ...['README.md', 'RIGHTS.md', 'CONTRIBUTING.md']
+  ...['README.md', 'RIGHTS.md', 'CONTRIBUTING.md', 'public-manifest.json']
     .map(file => path.join(root, file))
     .filter(fs.existsSync),
 ];
