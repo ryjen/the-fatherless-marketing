@@ -59,7 +59,9 @@ async function renderedHeroContrast(page) {
   const panel = hero.locator('.hero__panel').first();
   await expect(panel).toBeVisible();
 
-  const textNodes = panel.locator('h1, h2, h3, p, a, .button');
+  // Buttons/links own interactive backgrounds and are covered by component/token checks.
+  // This guard intentionally measures prose that visually overlays the hero composition.
+  const textNodes = panel.locator('h1, h2, h3, p');
   const samples = [];
   for (let index = 0; index < await textNodes.count(); index += 1) {
     const node = textNodes.nth(index);
@@ -79,7 +81,6 @@ async function renderedHeroContrast(page) {
   expect(samples.length).toBeGreaterThan(0);
 
   await panel.evaluate(element => {
-    element.dataset.visualGuard = 'active';
     for (const child of element.querySelectorAll('*')) {
       child.dataset.visualGuardVisibility = child.style.visibility;
       child.style.visibility = 'hidden';
@@ -95,7 +96,6 @@ async function renderedHeroContrast(page) {
         child.style.visibility = child.dataset.visualGuardVisibility || '';
         delete child.dataset.visualGuardVisibility;
       }
-      delete element.dataset.visualGuard;
     });
   }
 
