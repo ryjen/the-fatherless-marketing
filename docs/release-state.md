@@ -19,11 +19,11 @@ A configured URL never implies availability. Format state is explicit and inacti
 
 ## Formats and destinations
 
-Supported format identities are intentionally bounded: `ebook`, `paperback`, `hardcover`, `audiobook`, `direct`, `signed`, and `collector`.
+Supported format identities are intentionally bounded to actual reading/listening formats: `ebook`, `paperback`, `hardcover`, and `audiobook`.
 
-Each format has an explicit state: `unavailable`, `preorder`, `available`, or `sold-out`. Only `preorder` and `available` may carry destinations. Destinations are public HTTPS URLs classified as `retailer`, `direct`, or `distributor`; credentials or secret-bearing URLs are forbidden.
+Each format has an explicit state: `unavailable`, `preorder`, `available`, or `sold-out`. Only `preorder` and `available` may carry destinations. Destinations are public HTTPS URLs classified as `retailer`, `direct`, or `distributor`; credentials or secret-bearing URLs are forbidden. A direct store is therefore a channel for a format, not a format itself.
 
-This permits several destinations for one format without making any retailer the edition authority. Removing one destination does not imply that another format or the entire edition is withdrawn.
+This permits several destinations for one format without making any retailer the edition authority. Removing one destination does not imply that another format or the entire edition is withdrawn. Signed/numbered or other special physical editions belong under the separately gated collector path rather than masquerading as ordinary formats.
 
 ## Collector editions
 
