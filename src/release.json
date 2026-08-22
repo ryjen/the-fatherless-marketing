@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "state": "development",
+  "edition": null,
+  "formats": [],
+  "collector": {
+    "state": "disabled",
+    "destination": null
+  },
+  "replacement_url": null,
+  "press": {
+    "canonical_url": "/press/"
+  }
+}
