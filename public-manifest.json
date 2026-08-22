@@ -13,7 +13,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/",
-      "checksum_sha256": "ca9da44602e8a857e44efa2954a3509bcb8085928fc1890416bcec569cd8415c",
+      "checksum_sha256": "f20ab7362aa492d32c6e64a5079303f2e02de16d59375f2b4e531dc739772136",
       "replacement_status": "current"
     },
     {
@@ -43,7 +43,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/the-fatherless/",
-      "checksum_sha256": "9952b4087fceebce31643b20733acc2af403c09e84e3bed78a8d08ed4ad50648",
+      "checksum_sha256": "9b432694516c8ec033195347e17dde7af264835a9061f6c965a46e3da65ec95a",
       "replacement_status": "current"
     },
     {
@@ -310,7 +310,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/press/",
-      "checksum_sha256": "20b92a3d8698526855d165a62f0e3e32caf840bc4d4d740a6e4de75cc21c12f9",
+      "checksum_sha256": "260745fec0b36469ae090c1e11c44329f6cb8a2588ecae8f5ec91d980181a53f",
       "replacement_status": "current"
     },
     {
