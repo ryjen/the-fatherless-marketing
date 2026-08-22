@@ -47,6 +47,7 @@ body[data-theme='original'] .hero::after {
 body[data-theme='original'] .hero__panel {
   border-color: #40505a;
   background: #101820;
+  background: color-mix(in srgb, #101820 93%, transparent);
 }
 
 body[data-theme='original'] .panel {
