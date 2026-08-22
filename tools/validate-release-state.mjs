@@ -4,7 +4,7 @@ import path from 'node:path';
 import process from 'node:process';
 
 const RELEASE_STATES = new Set(['development', 'announced', 'preorder', 'released', 'superseded', 'withdrawn']);
-const FORMAT_TYPES = new Set(['ebook', 'paperback', 'hardcover', 'audiobook', 'direct', 'signed', 'collector']);
+const FORMAT_TYPES = new Set(['ebook', 'paperback', 'hardcover', 'audiobook']);
 const FORMAT_STATES = new Set(['unavailable', 'preorder', 'available', 'sold-out']);
 const DESTINATION_KINDS = new Set(['retailer', 'direct', 'distributor']);
 const COLLECTOR_STATES = new Set(['disabled', 'planned', 'preorder', 'available', 'sold-out', 'closed']);
