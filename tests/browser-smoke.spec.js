@@ -54,7 +54,7 @@ function blend(foreground, background, alpha) {
 }
 
 async function renderedHeroContrast(page) {
-  const hero = page.locator('.hero.hero--media').first();
+  const hero = page.locator('.hero').first();
   await expect(hero).toBeVisible();
   const panel = hero.locator('.hero__panel').first();
   await expect(panel).toBeVisible();
