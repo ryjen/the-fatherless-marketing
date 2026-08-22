@@ -299,6 +299,21 @@
       "metadata_review": "stripped"
     },
     {
+      "id": "release-state",
+      "path": "src/release.json",
+      "title": "Public release state",
+      "summary": "Explicit safe-default commercial launch state with gated format, destination, replacement, and collector-edition routing.",
+      "content_type": "site-asset",
+      "spoiler_tier": "premise",
+      "approval_state": "approved",
+      "rights_status": "repository-authored",
+      "provenance_class": "public-native",
+      "publication_date": null,
+      "canonical_url": "/release.json",
+      "checksum_sha256": "bda18cdd1cd108542b6b79bf5e1c34abfda0d84b85bafee4a601d8d2fba22e41",
+      "replacement_status": "current"
+    },
+    {
       "id": "press-industry",
       "path": "src/press/index.html",
       "title": "Press & Industry",
