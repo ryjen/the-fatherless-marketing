@@ -97,6 +97,7 @@ test('collector sales remain separately gated from ordinary edition state', () =
   assert.doesNotThrow(() => validateReleaseConfig(config));
 
   config.state = 'announced';
+  config.formats = [{ type: 'ebook', state: 'unavailable', destinations: [] }];
   assert.throws(() => validateReleaseConfig(config), /announced state cannot activate collector sales/);
 });
 
