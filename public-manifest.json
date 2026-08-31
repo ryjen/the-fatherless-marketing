@@ -4,8 +4,8 @@
     {
       "id": "site-placeholder-home",
       "path": "src/index.html",
-      "title": "The Fatherless",
-      "summary": "Public trilogy overview spanning the prequel, original, and sequel.",
+      "title": "Entanglement of Ages",
+      "summary": "Public Entanglement of Ages overview spanning the prequel, original, and sequel.",
       "content_type": "page",
       "spoiler_tier": "premise",
       "approval_state": "approved",
@@ -13,14 +13,14 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/",
-      "checksum_sha256": "3b4f8f3e90eaa029ffabac0cc94ee349e48a9a59f394663447dd5e25519b4c24",
+      "checksum_sha256": "5bbb484b1e3a1fe726b996e288dac0cd4e90eaa065b0e107ab54937f38052997",
       "replacement_status": "current"
     },
     {
       "id": "site-placeholder-books",
       "path": "src/books/index.html",
       "title": "Books",
-      "summary": "Public trilogy book index with premise-level summaries for all three stories.",
+      "summary": "Public Entanglement of Ages book index with premise-level summaries for all three stories.",
       "content_type": "page",
       "spoiler_tier": "premise",
       "approval_state": "approved",
@@ -28,7 +28,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/",
-      "checksum_sha256": "32f444f979ebc2f81e66953d013a18eb9137ddf61ab7745441148f9de1c1d819",
+      "checksum_sha256": "192d6cdb1e880a29cf19afa49efb360c75d6a3e4388fb873cb1ef2dbe5a88e8e",
       "replacement_status": "current"
     },
     {
@@ -95,7 +95,7 @@
       "id": "site-placeholder-world",
       "path": "src/world/index.html",
       "title": "World",
-      "summary": "Public spoiler-safe overview of the trilogy's three ages, settings, and premise-level social pressures.",
+      "summary": "Public spoiler-safe overview of Entanglement of Ages across three ages, settings, and premise-level social pressures.",
       "content_type": "page",
       "spoiler_tier": "premise",
       "approval_state": "approved",
@@ -103,7 +103,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/world/",
-      "checksum_sha256": "b241f4e6a68960c2b78fad5d8f78d39d669cc0ef848b747c13e6f45fa8772b0b",
+      "checksum_sha256": "73a228667829deb456a92ae5d49834fd00d59b318dc76f7a817daa17a4b25d8c",
       "replacement_status": "current"
     },
     {
@@ -125,7 +125,7 @@
       "id": "site-placeholder-about",
       "path": "src/about/index.html",
       "title": "About",
-      "summary": "Public overview of the trilogy, its creator, and the boundary between released and private material.",
+      "summary": "Public overview of Entanglement of Ages, its creator, and the boundary between released and private material.",
       "content_type": "page",
       "spoiler_tier": "premise",
       "approval_state": "approved",
@@ -133,7 +133,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/about/",
-      "checksum_sha256": "dfdd76957a69c13ed17e93d3a7ab737eb6893de714e6bf6fcd3f0c498e13ea00",
+      "checksum_sha256": "736311c44ac7416c4d90354536e4bef8726730ab9a030d9fb95dfea2b7441020",
       "replacement_status": "current"
     },
     {
