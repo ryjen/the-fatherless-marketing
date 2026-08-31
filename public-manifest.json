@@ -43,7 +43,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/the-fatherless/",
-      "checksum_sha256": "149c6e8b6eaf055877b70f98f66d4fda2e6da803f487601513a54e147864cf4e",
+      "checksum_sha256": "f40411cd364187d3bd88eacce0d2e82d2e19386e08a148b48e1880d7afdeb6e6",
       "replacement_status": "current"
     },
     {
@@ -58,7 +58,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/prequel/",
-      "checksum_sha256": "a7d5381944637d678652967a12fa8b26c5c1ec39d524938dc95d1ff8ac8883db",
+      "checksum_sha256": "c41d98978566d113bf569fb276c2cb6f3cccaf31bd27506f84551531be87173d",
       "replacement_status": "current"
     },
     {
@@ -73,14 +73,14 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/sequel/",
-      "checksum_sha256": "683cdb5fc1c93460bafde94eb1cd30dea59475bc6a27e1bd02fb987fb08162f8",
+      "checksum_sha256": "a37941e27efece31c8490e6fe1b8dd325b29c831bb69e260f09321391cc65a28",
       "replacement_status": "current"
     },
     {
       "id": "site-placeholder-characters",
       "path": "src/characters/index.html",
       "title": "Characters",
-      "summary": "Public character index placeholder.",
+      "summary": "Public Entanglement of Ages character index placeholder.",
       "content_type": "page",
       "spoiler_tier": "placeholder",
       "approval_state": "placeholder",
@@ -110,7 +110,7 @@
       "id": "site-placeholder-news",
       "path": "src/news/index.html",
       "title": "News",
-      "summary": "Dated public development, release, excerpt, appearance, and media updates for the trilogy.",
+      "summary": "Dated public development, release, excerpt, appearance, and media updates for Entanglement of Ages.",
       "content_type": "page",
       "spoiler_tier": "premise",
       "approval_state": "approved",
@@ -118,7 +118,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/news/",
-      "checksum_sha256": "b6b046bd256879269c9b6a53bb7409e92e8f6fae5b3b5a6ef7982a2410930567",
+      "checksum_sha256": "34028972db6ae7b7cadbaf8b27dbcf20a52406ec69d4651c9d77773f57a959ba",
       "replacement_status": "current"
     },
     {
@@ -332,7 +332,7 @@
       "id": "news-public-trilogy-site",
       "path": "src/news/2026-08-08-public-trilogy-site/index.html",
       "title": "The trilogy has a public home",
-      "summary": "Public update announcing the trilogy website presentation without making a publication-date claim.",
+      "summary": "Public update announcing Entanglement of Ages as the trilogy website presentation without making a publication-date claim.",
       "content_type": "news",
       "spoiler_tier": "premise",
       "approval_state": "published",
@@ -340,7 +340,7 @@
       "provenance_class": "public-native",
       "publication_date": "2026-08-08",
       "canonical_url": "/news/2026-08-08-public-trilogy-site/",
-      "checksum_sha256": "b698b7c2751fb84d58ae4ea427e47a381513859c0903773005a81d7b22e6a202",
+      "checksum_sha256": "b806472252a8f850e0ac87531d96f6f7eaf7f73de4a4d081abc22296040420f2",
       "replacement_status": "current"
     },
     {
@@ -361,7 +361,7 @@
     {
       "id": "feed-atom",
       "path": "src/feed.xml",
-      "title": "The Fatherless Atom feed",
+      "title": "Entanglement of Ages Atom feed",
       "summary": "Machine-readable public update feed for readers who do not use a newsletter provider.",
       "content_type": "site-asset",
       "spoiler_tier": "premise",
@@ -370,7 +370,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/feed.xml",
-      "checksum_sha256": "a6554dcdc927613245fee4738f4858158ccf377cf90196e128eb8cf0f0c209af",
+      "checksum_sha256": "b859f7aa94404313705469af06bf83e293d150a70836751e30667270d5c808ac",
       "replacement_status": "current"
     },
     {
