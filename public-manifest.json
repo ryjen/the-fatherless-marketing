@@ -58,7 +58,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/prequel/",
-      "checksum_sha256": "c41d98978566d113bf569fb276c2cb6f3cccaf31bd27506f84551531be87173d",
+      "checksum_sha256": "b9b5170ae79e5d36f5b5e9eba883525260ebb45fde3913f45c09d1a5f7d6a480",
       "replacement_status": "current"
     },
     {
@@ -73,7 +73,7 @@
       "provenance_class": "public-native",
       "publication_date": null,
       "canonical_url": "/books/sequel/",
-      "checksum_sha256": "a37941e27efece31c8490e6fe1b8dd325b29c831bb69e260f09321391cc65a28",
+      "checksum_sha256": "7be4dd304457a1f388cad74ec3ab72529c1176eb89774774d6793b950c41b31f",
       "replacement_status": "current"
     },
     {
