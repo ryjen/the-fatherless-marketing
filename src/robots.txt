@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fatherless.ryanjennin.gs/sitemap.xml
+Sitemap: https://eoa.ryanjennin.gs/sitemap.xml

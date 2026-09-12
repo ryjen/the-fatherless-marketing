@@ -2,15 +2,15 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Entanglement of Ages · News</title>
   <subtitle>Public development, release, excerpt, appearance, and media updates for Entanglement of Ages.</subtitle>
-  <id>https://fatherless.ryanjennin.gs/feed.xml</id>
-  <link rel="self" href="https://fatherless.ryanjennin.gs/feed.xml"/>
-  <link rel="alternate" href="https://fatherless.ryanjennin.gs/news/"/>
+  <id>https://eoa.ryanjennin.gs/feed.xml</id>
+  <link rel="self" href="https://eoa.ryanjennin.gs/feed.xml"/>
+  <link rel="alternate" href="https://eoa.ryanjennin.gs/news/"/>
   <updated>2026-08-09T05:15:00Z</updated>
   <author><name>Ryan Jennings</name></author>
   <entry>
     <title>The trilogy has a public home</title>
-    <id>https://fatherless.ryanjennin.gs/news/2026-08-08-public-trilogy-site/</id>
-    <link href="https://fatherless.ryanjennin.gs/news/2026-08-08-public-trilogy-site/"/>
+    <id>https://eoa.ryanjennin.gs/news/2026-08-08-public-trilogy-site/</id>
+    <link href="https://eoa.ryanjennin.gs/news/2026-08-08-public-trilogy-site/"/>
     <published>2026-08-09T04:00:00Z</published>
     <updated>2026-08-09T04:00:00Z</updated>
     <summary>The public site now presents Age of Embers, The Fatherless, and Neurion as Entanglement of Ages across three ages and a new cinematic visual system.</summary>

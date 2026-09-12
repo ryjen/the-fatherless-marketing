@@ -14,9 +14,9 @@ JavaScript is the only custom scripting language. Deployment diagnostics are sub
 
 ```sh
 node tools/site.mjs pages-state
-node tools/site.mjs origin https://ryjen.github.io/the-fatherless-marketing/
-node tools/site.mjs origin https://fatherless.ryanjennin.gs/
-node tools/site.mjs cloudflare https://fatherless.ryanjennin.gs/
+node tools/site.mjs origin https://ryjen.github.io/entaglement-of-ages-marketing/
+node tools/site.mjs origin https://eoa.ryanjennin.gs/
+node tools/site.mjs cloudflare https://eoa.ryanjennin.gs/
 ```
 
 For normal development and validation, use the shared task front door:
@@ -39,7 +39,7 @@ One-time activation:
 
 Before custom-domain attachment, the expected project origin is:
 
-`https://ryjen.github.io/the-fatherless-marketing/`
+`https://ryjen.github.io/entaglement-of-ages-marketing/`
 
 ## Deployment verification
 
@@ -83,7 +83,7 @@ Cutover sequence:
 
 GitHub Pages remains the origin; Cloudflare may provide public TLS/proxy/cache behavior.
 
-For `fatherless.ryanjennin.gs`:
+For `eoa.ryanjennin.gs`:
 
 - DNS should resolve the custom subdomain to the GitHub Pages user domain;
 - use end-to-end authenticated origin TLS (`Full (strict)`) once the Pages origin certificate is available;

@@ -6,9 +6,9 @@ description = "Install exact top-level Node dependencies"
 run = "npm install --no-package-lock --no-audit --no-fund"
 
 [tasks.source]
-description = "Validate public media integrity, content model, manifest boundary, rights metadata, release state, production hero contract, and setting language"
+description = "Validate public media integrity, content model, canonical origin, manifest boundary, rights metadata, release state, production hero contract, and setting language"
 depends = ["deps"]
-run = "node tools/validate-media-integrity.mjs && node tools/site.mjs source && node tools/validate-release-state.mjs && node tools/validate-public-language.mjs"
+run = "node tools/validate-media-integrity.mjs && node tools/validate-manifest-checksums.mjs --emit-refreshed-base64 && node tools/site.mjs source && node tools/validate-canonical-origin.mjs && node tools/validate-release-state.mjs && node tools/validate-public-language.mjs"
 
 [tasks.contracts]
 description = "Run Node contract tests for publication, release state, and responsive media"
@@ -48,4 +48,4 @@ run = "node tools/site.mjs browser"
 [tasks.check]
 description = "Run the complete public-site validation gate"
 depends = ["contracts", "html", "css", "browser"]
-run = "node --check tools/site.mjs && node --check tools/validate-media-integrity.mjs && node --check tools/validate-release-state.mjs && node --check tools/validate-public-language.mjs"
+run = "node --check tools/site.mjs && node --check tools/validate-media-integrity.mjs && node --check tools/validate-manifest-checksums.mjs && node --check tools/validate-canonical-origin.mjs && node --check tools/validate-release-state.mjs && node --check tools/validate-public-language.mjs"
