@@ -77,9 +77,9 @@ test('all public HTML surfaces share one primary navigation contract', async () 
   }
 });
 
-test('series-level overview pages use the shared three-age hero treatment', async () => {
+test('series-level overview pages use the shared four-age hero treatment', async () => {
   const css = await read('src/styles/trilogy-pages.v1.css');
-  assert.match(css, /grid-template-columns:repeat\(3,1fr\)/, 'trilogy overview hero should present three equal visual ages');
+  assert.match(css, /grid-template-columns:repeat\(4,1fr\)/, 'series overview hero should present four equal visual ages');
 
   for (const pagePath of trilogyOverviewPages) {
     const html = await read(pagePath);
@@ -88,6 +88,7 @@ test('series-level overview pages use the shared three-age hero treatment', asyn
     assert.match(html, /age-of-embers-hero\.webp/, `${pagePath} should include prequel artwork`);
     assert.match(html, /fatherless-original-hero\.webp/, `${pagePath} should include original artwork`);
     assert.match(html, /neurion-hero\.webp/, `${pagePath} should include sequel artwork`);
+    assert.match(html, /age-of-forms-hero\.webp/, `${pagePath} should include Book IV artwork`);
   }
 });
 

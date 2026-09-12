@@ -1,4 +1,4 @@
-.trilogy-page-hero__media{position:absolute;inset:0;z-index:-2;display:grid;grid-template-columns:repeat(3,1fr);margin:0}
+.trilogy-page-hero__media{position:absolute;inset:0;z-index:-2;display:grid;grid-template-columns:repeat(4,1fr);margin:0}
 .trilogy-page-hero__media img{width:100%;height:100%;object-fit:cover}
 .trilogy-page-hero::before{background:linear-gradient(to top,rgb(5 8 13/.98),rgb(5 8 13/.72) 42%,rgb(5 8 13/.22) 78%)}
 .trilogy-page-hero .hero__panel{justify-self:center;text-align:center}
